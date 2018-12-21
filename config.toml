@@ -10,7 +10,7 @@ hasCJKLanguage = false  # If there're Chinese/Japanese/Korean Languages in the c
 rssLimit = 10  # Maximum number of items in the RSS feed.
 copyright = "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License." # This message is only used by the RSS template.
 enableEmoji = true  # Shorthand emojis in content files - https://gohugo.io/functions/emojify/
-# googleAnalytics = "UA-123-45"
+googleAnalytics = "UA-129418446-1"
 # disqusShortname = "yourdiscussshortname"
 publishDir = "docs"
 
@@ -39,17 +39,13 @@ publishDir = "docs"
 
   # Social Icons
   # Check https://github.com/Track3/hermit#social-icons for more info.
-  # [[params.social]]
-  #   name = "twitter"
-  #   url = "https://twitter.com/"
-  #
-  # [[params.social]]
-  #   name = "instagram"
-  #   url = "https://instagram.com/"
-  #
-  # [[params.social]]
-  #   name = "github"
-  #   url = "https://github.com/"
+  [[params.social]]
+    name = "twitter"
+    url = "https://twitter.com/davidjamessmith"
+
+  [[params.social]]
+    name = "github"
+    url = "https://github.com/davesmith00000"
 
 [menu]
 
