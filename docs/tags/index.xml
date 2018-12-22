@@ -7,91 +7,9 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-gb</language>
     <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
-    <lastBuildDate>Mon, 01 Oct 2018 16:15:09 +0800</lastBuildDate>
     
 	<atom:link href="https://davesmith00000.github.io/fppixels/tags/index.xml" rel="self" type="application/rss+xml" />
     
-    
-    <item>
-      <title>Demo</title>
-      <link>https://davesmith00000.github.io/fppixels/tags/demo/</link>
-      <pubDate>Mon, 01 Oct 2018 16:15:09 +0800</pubDate>
-      
-      <guid>https://davesmith00000.github.io/fppixels/tags/demo/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Development</title>
-      <link>https://davesmith00000.github.io/fppixels/tags/development/</link>
-      <pubDate>Wed, 02 Apr 2014 00:00:00 +0000</pubDate>
-      
-      <guid>https://davesmith00000.github.io/fppixels/tags/development/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Go</title>
-      <link>https://davesmith00000.github.io/fppixels/tags/go/</link>
-      <pubDate>Wed, 02 Apr 2014 00:00:00 +0000</pubDate>
-      
-      <guid>https://davesmith00000.github.io/fppixels/tags/go/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Golang</title>
-      <link>https://davesmith00000.github.io/fppixels/tags/golang/</link>
-      <pubDate>Wed, 02 Apr 2014 00:00:00 +0000</pubDate>
-      
-      <guid>https://davesmith00000.github.io/fppixels/tags/golang/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Hugo</title>
-      <link>https://davesmith00000.github.io/fppixels/tags/hugo/</link>
-      <pubDate>Wed, 02 Apr 2014 00:00:00 +0000</pubDate>
-      
-      <guid>https://davesmith00000.github.io/fppixels/tags/hugo/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Image</title>
-      <link>https://davesmith00000.github.io/fppixels/tags/image/</link>
-      <pubDate>Mon, 01 Oct 2018 16:15:09 +0800</pubDate>
-      
-      <guid>https://davesmith00000.github.io/fppixels/tags/image/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Templates</title>
-      <link>https://davesmith00000.github.io/fppixels/tags/templates/</link>
-      <pubDate>Wed, 02 Apr 2014 00:00:00 +0000</pubDate>
-      
-      <guid>https://davesmith00000.github.io/fppixels/tags/templates/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Themes</title>
-      <link>https://davesmith00000.github.io/fppixels/tags/themes/</link>
-      <pubDate>Wed, 02 Apr 2014 00:00:00 +0000</pubDate>
-      
-      <guid>https://davesmith00000.github.io/fppixels/tags/themes/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Typography</title>
-      <link>https://davesmith00000.github.io/fppixels/tags/typography/</link>
-      <pubDate>Sat, 29 Sep 2018 11:36:33 +0800</pubDate>
-      
-      <guid>https://davesmith00000.github.io/fppixels/tags/typography/</guid>
-      <description></description>
-    </item>
     
   </channel>
 </rss>
