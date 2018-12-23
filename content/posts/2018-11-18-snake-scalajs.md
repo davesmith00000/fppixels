@@ -5,7 +5,7 @@ title: Snake in Scala.js
 draft: false
 ---
 
-![img](/fppixels/images/fallAndStop2.gif)
+![img](/fppixels/images/snake.png)
 
 This was a milestone week.
 
