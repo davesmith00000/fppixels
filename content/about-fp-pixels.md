@@ -1,17 +1,13 @@
-+++
-title = "About Hugo"
-date = "2014-04-09"
-+++
+---
+author: "Dave Smith"
+title: The Train Set in My Mental Attic.
+draft: false
+---
 
-Hugo is the **world’s fastest framework for building websites**. It is written in Go.
+> "Never build your own game engine. Almost never."
 
-It makes use of a variety of open source projects including:
+(I think that's probably the sum of all internet wisdom on the subject of building custom game engines.)
 
-* https://github.com/russross/blackfriday
-* https://github.com/alecthomas/chroma
-* https://github.com/muesli/smartcrop
-* https://github.com/spf13/cobra
-* https://github.com/spf13/viper
+I have been compulsively programming games and graphics engines for years and years. I'm not claiming to be any good at it, I just find that I keep doing it. I'm a hobbyist, like someone that picks up their knitting every time they sit down in front of the TV, but it keeps me relatively sane.
 
-Learn more and contribute on [GitHub](https://github.com/gohugoio).
-
+My latest little project is coding games and a game engine in Scala, and I thought it might be nice to scribble down a few notes as I go.

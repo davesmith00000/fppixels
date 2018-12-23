@@ -7,8 +7,244 @@
 		<generator>Hugo -- gohugo.io</generator>
 		<language>en-gb</language>
 		<copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
-		<lastBuildDate>Sun, 18 Nov 2018 00:00:00 +0000</lastBuildDate>
+		<lastBuildDate>Sun, 23 Dec 2018 00:00:00 +0000</lastBuildDate>
 		<atom:link href="https://davesmith00000.github.io/fppixels/posts/index.xml" rel="self" type="application/rss+xml" />
+		
+		<item>
+			<title>Building Games Without Effects</title>
+			<link>https://davesmith00000.github.io/fppixels/posts/2018-12-23-games-without-effects/</link>
+			<pubDate>Sun, 23 Dec 2018 00:00:00 +0000</pubDate>
+			
+			<guid>https://davesmith00000.github.io/fppixels/posts/2018-12-23-games-without-effects/</guid>
+			<description>TL;DR: Indigo does not [generally] have any Monads or Functors exposed on it&amp;rsquo;s APIs. This is intentional since you&amp;rsquo;re not allowed to error and everything is synchronous.
+Monads that power the internet As I suspect is the case with the majority of Scala developers, my day job is largely about server side programming, building microservices and the like.
+In the context of server-side programming you simply cannot move for Monads.</description>
+			<content type="html"><![CDATA[
+
+<h2 id="tl-dr">TL;DR:</h2>
+
+<p>Indigo does not [generally] have any Monads or Functors exposed on it&rsquo;s APIs. This is intentional since you&rsquo;re not allowed to error and everything is synchronous.</p>
+
+<h2 id="monads-that-power-the-internet">Monads that power the internet</h2>
+
+<p>As I suspect is the case with the majority of Scala developers, my day job is largely about server side programming, building microservices and the like.</p>
+
+<p>In the context of server-side programming you simply cannot move for Monads. To clarify though: I don’t really mean Monads, what I really mean is effectful types. They could also be Functors or Applicatives for instance, but usually people talk about Monads and effect types interchangeably, so forgive me if you find that inaccurate.</p>
+
+<p>Two of the common effects people often try to model are:</p>
+
+<ol>
+<li>Working in a context with the possibility of an error e.g. using <code>Option</code>, <code>Either</code>, or <code>Try</code></li>
+<li>Working in the context of concurrency / latency e.g. with <code>Future</code>, <code>Task</code>, or <code>IO</code></li>
+</ol>
+
+<p>Here is an example from the <a href="https://http4s.org/v0.18/dsl/">Http4s 0.18 docs</a> that is talking about how Http4s describes / models routing as a function:</p>
+
+<blockquote>
+<p>Recall from earlier that an <code>HttpRoutes[F]</code> is just a type alias for <code>Kleisli[OptionT[F, ?], Request[F], Response[F]]</code>.</p>
+</blockquote>
+
+<p>So that’s:</p>
+
+<ol>
+<li>A <code>Kleisli</code> - the monad compositor, used to glue routes together - of&hellip;</li>
+<li>An <code>OptionT</code> - a monad transformer on <code>Option</code> denoting that there may not be a matching route (a kind of error) in the context of <code>F</code> (more on that later)&hellip;</li>
+<li>Of a <code>Request[F]</code> and a <code>Response[F]</code> where Request and Response are not themselves Monads&hellip;</li>
+<li>But what about that <code>F</code>? Well, because of it’s position in the Monad Transformer, we know:
+
+<ul>
+<li>The <code>F</code> type is going to be a higher kinded type, some sort of Functor.</li>
+<li>Moreover, it’s in a <em>Monad</em> transformer so I think its safe to go right ahead and assume that not only is <code>F</code> a Functor, but it’s also a Monad.</li>
+<li>The <code>F</code> type is there to grant some sort of effectual context, and given that this is an Http service framework, it doesn’t require much imagination to assume that <code>F</code> will be handling concurrency and the possibility of errors.</li>
+</ul></li>
+</ol>
+
+<p>Phew! Quite a lot going on there, but all perfectly reasonable I hope you’ll agree:
+You have a bunch of routes to join together and each one may or may not contain a match for the incoming request. They’re likely to perform a concurrent operation like calling another service or accessing a database, while dealing with the fact that errors can happen during such activities.</p>
+
+<p>Key point:
+If you agree with the argument in point 4, then we can agree the function signature is forcing us to accept and deal with the fact that F is a Monad that operates in the context of concurrency and errors, and that we the programmer will have to code with the expectation in mind.</p>
+
+<h2 id="monads-in-indigo">Monads in Indigo</h2>
+
+<p>If you boiled down Indigo’s functions to a single basic activity that’s performed every frame, you might be left with something looking like this made up function:</p>
+<div class="highlight"><pre class="chroma"><code class="language-scala" data-lang="scala"><span class="o">(</span><span class="nc">GameState</span><span class="o">,</span> <span class="nc">List</span><span class="o">[</span><span class="kt">GlobalEvent</span><span class="o">],</span> <span class="nc">GameTime</span><span class="o">)</span> <span class="k">=&gt;</span> <span class="o">(</span><span class="nc">GameState</span><span class="o">,</span> <span class="nc">List</span><span class="o">[</span><span class="kt">GlobalEvents</span><span class="o">],</span> <span class="nc">RenderedView</span><span class="o">)</span></code></pre></div>
+<p>Which is to say that we take the game state from the last frame, and combine it with a list of stuff that happened during the last frame and the current game time (as all games are time based simulations). The result of merging those things together is an updated game state, a new list of things that happened during this frame, and a rendered view of the game to show back to the player.</p>
+
+<p>No Monads there though. Why not? Surely this is some naive omission in the API design?</p>
+
+<h3 id="handle-your-errors-like-a-grown-up">Handle your errors like a grown up</h3>
+
+<p>What should happen in a video game when an error is encountered? Depends on the error!</p>
+
+<p>There are really only two error scenarios, and the first is armageddon. If you throw an exception in Indigo, the entire game will simply halt. It’s blue screen of death time, and the reason for that design choice is that this isn’t how you should be handling errors, so we assume that an exception is truly exceptional and devastating.</p>
+
+<p>The other error scenario is, for example, an http request to the leaderboard failed. Should the world end? No! You should tell the player that something went wrong, recover, and carry on.</p>
+
+<p>So no Monad’s denoting errors, no automatic recovery on error by the framework. You are not operating in a context where errors are deemed acceptable, and so you don’t get any support for errors in the function signature.</p>
+
+<h3 id="no-concurrency-sort-of">No concurrency (sort of)</h3>
+
+<p>Indigo can be thought of as being entirely synchronous and super predictable.</p>
+
+<p>At the time of writing, we compile to JavaScript in the browser, which means no threads. No threads means no contention, no blocking, no awaiting, no parallelism.</p>
+
+<p>Concurrent actions like Http requests are performed via callbacks that Indigo hides away, so you emit an <code>HttpRequest</code> event during one frame, and an <code>HttpResponse</code> event comes back at the start of some later frame for you to handle just like any other world event available for you to respond to.</p>
+
+<p>No explicit concurrency means no concurrency monads. You are not operating in a context where concurrency is described or should be used.</p>
+
+<h2 id="so-no-monads-at-all">So.. no Monads at all?</h2>
+
+<p>Well no. When building a game in Indigo you can use whatever Monads you like, and Indigo itself does use Monads. A few are visible such as the <code>Future</code>&rsquo;s returned on an async config or asset load (yes, I know I said everything was synchronous, in practical terms it is), but most are hidden away. For example, earlier I mentioned that if an exception is thrown the game stops. Well, that’s a series of sequential operations that handles the possibility of an exception occurring and reports what happened, and sure enough in the depths of the engine, there&rsquo;s a Monad doin that.</p>
+
+<p>The important point is that like Http4s, we are trying to drive programmer behaviour by the type signature (I may or may not be succeeding). In the case of Http4s, you <em>must</em> acknowledge that errors and concurrency are concerns. In Indigo you <em>must</em> not have errors or return anything that you expect to be evaluated or become a real value at some later time.</p>
+
+<h2 id="naive">Naive?</h2>
+
+<p>Quite possibly. At some point I’d like to add support for JVM, WASM and native compile targets. Those platforms are more complex beasts that may add requirements around things like threading, and I imagine that I’ll have to reconsider the use of Monads to capture effects when / if that happens.</p>
+]]></content>
+		</item>
+		
+		<item>
+			<title>Big Beautiful Packages</title>
+			<link>https://davesmith00000.github.io/fppixels/posts/2018-12-16-big-beautiful-packages/</link>
+			<pubDate>Sun, 16 Dec 2018 00:00:00 +0000</pubDate>
+			
+			<guid>https://davesmith00000.github.io/fppixels/posts/2018-12-16-big-beautiful-packages/</guid>
+			<description>TL;DR: You can use package objects to alias types making your library&amp;rsquo;s imports easier to work with, aid encapsulation, and act as an interface. Big popular libraries do this, I just hadn’t realised the benefits until recently.
+Authors note: This post has been sitting in draft for a while. At the time I originally wrote it, I was unreasonably excited about this little trick, but you may find this underwhelming&amp;hellip;</description>
+			<content type="html"><![CDATA[
+
+<h2 id="tl-dr">TL;DR:</h2>
+
+<p>You can use package objects to alias types making your library&rsquo;s imports easier to work with, aid encapsulation, and act as an interface. Big popular libraries do this, I just hadn’t realised the benefits until recently.</p>
+
+<h3 id="authors-note">Authors note:</h3>
+
+<p>This post has been sitting in draft for a while. At the time I originally wrote it, I was unreasonably excited about this little trick, but you may find this underwhelming&hellip;</p>
+
+<p>Still reading? Well don&rsquo;t say I didn&rsquo;t warn you.</p>
+
+<h3 id="a-nicer-editor">A nicer editor</h3>
+
+<p>It all started with a re-occuring unease I have with how we Scala developers are completely bound to Intellij IDEA. Intellij is amazing of course, but I don&rsquo;t like the non-standard Scala type checker or that it&rsquo;s our only serious choice.</p>
+
+<p>After quite a lot of digging and experimenting with editors, configurations and plugins; I found that for simple creation and editing I actually prefer using Atom (with the SBT plugin, or Metals) to Intellij. Sadly, Atom isn&rsquo;t quite sufficient for all my day to day needs and so I’m sort of alternating between the two.</p>
+
+<p>One problem is that while I personally preferred the code writing experience in Atom; discovery and navigation through unfamiliar / long forgotten project structures without Intellij is rather hard going. That’s not the real killer though. While navigating a local codebase may be hard, finding your way around third party libraries when your editor doesn’t understand the source code is nigh on impossible. This reduces you to doing the unthinkable: Reading the API docs. How tedious.</p>
+
+<h3 id="where-am-i-going-with-this">Where am I going with this?</h3>
+
+<p>One thing that’s always interested me when observing other programmers in their natural habitat, is how much their choice of text editor affects the way they construct and organise code. For example, in general I find people who use IDE’s that make navigation trivial tend to be more liberal and expressive with their package hierarchies than people editing in a terminal based text editor. I’m not saying that’s universally true, just my own observations, but it leads me to a question:</p>
+
+<p>How could targeting users who prefer editors like Atom or VIM affect our library design, specifically the problem of figuring out what imports are needed?</p>
+
+<h3 id="package-objects-to-the-rescue">Package Objects to the rescue!</h3>
+
+<p>The solution I’ve come up with for Indigo is to make better use of the package object.</p>
+
+<p>A package object basically lets you import code that’s associated with a whole package, for example, if you had a package structure like <code>myamazinglib.utils</code>, then a package object at that level would let you do something like this (&hellip;not that you would):</p>
+<div class="highlight"><pre class="chroma"><code class="language-scala" data-lang="scala"><span class="k">package</span> <span class="nn">myamazinglib.utils</span> <span class="o">{</span>
+  <span class="k">implicit</span> <span class="k">def</span> <span class="n">toOption</span><span class="o">[</span><span class="kt">A</span><span class="o">](</span><span class="n">a</span><span class="k">:</span> <span class="kt">A</span><span class="o">)</span><span class="k">:</span> <span class="kt">Option</span><span class="o">[</span><span class="kt">A</span><span class="o">]</span> <span class="k">=</span> <span class="nc">Option</span><span class="o">(</span><span class="n">a</span><span class="o">)</span>
+<span class="o">}</span></code></pre></div>
+<p>Allowing for:</p>
+<div class="highlight"><pre class="chroma"><code class="language-scala" data-lang="scala"><span class="k">import</span> <span class="nn">myamazinglib.utils._</span>
+
+<span class="k">val</span> <span class="n">maybeMessage</span><span class="k">:</span> <span class="kt">Option</span><span class="o">[</span><span class="kt">String</span><span class="o">]</span> <span class="k">=</span> <span class="s">&#34;Hello, World!&#34;</span></code></pre></div>
+<p>Not everyone’s cup of tea I’m sure, but you get the idea.</p>
+
+<p>But I learned a thing! Another handy use for package objects is that you can set aliases. For example:</p>
+<div class="highlight"><pre class="chroma"><code class="language-scala" data-lang="scala"><span class="k">package</span> <span class="nn">myamazinglib.utils</span> <span class="o">{</span>
+  <span class="c1">// type only if it is just a trait / type
+</span><span class="c1"></span>  <span class="k">type</span> <span class="kt">AbstractTool</span> <span class="o">=</span> <span class="n">tooling</span><span class="o">.</span><span class="nc">AbstractTool</span>
+
+  <span class="c1">// type and val if it has members you’d like to access
+</span><span class="c1"></span>  <span class="k">type</span> <span class="kt">CleverTool</span> <span class="o">=</span> <span class="n">tooling</span><span class="o">.</span><span class="n">helpers</span><span class="o">.</span><span class="nc">CleverTool</span>
+  <span class="k">val</span> <span class="nc">CleverTool</span><span class="k">:</span> <span class="kt">tooling.helpers.CleverTool.</span><span class="k">type</span> <span class="o">=</span> <span class="n">tooling</span><span class="o">.</span><span class="n">helpers</span><span class="o">.</span><span class="nc">CleverTool</span>
+<span class="o">}</span></code></pre></div>
+<p>And that means you can write code like this:</p>
+<div class="highlight"><pre class="chroma"><code class="language-scala" data-lang="scala"><span class="k">import</span> <span class="nn">myamazinglib.utils._</span>
+
+<span class="k">val</span> <span class="n">tool</span><span class="k">:</span> <span class="kt">CleverTool</span> <span class="o">=</span> <span class="nc">CleverTool</span><span class="o">(...)</span></code></pre></div>
+<p>Without having to know the entire path to the class! Much better!</p>
+
+<p>But that’s not all: Your packages are now acting like an interface, so if your code moves behind the scenes your users won’t necessarily notice, and you only need to expose the types that people really need via the package object.</p>
+
+<p>Neat! Underwhelming &hellip;but neat!</p>
+]]></content>
+		</item>
+		
+		<item>
+			<title>Scala Game Devlog 1</title>
+			<link>https://davesmith00000.github.io/fppixels/posts/2018-11-30-devlog-1/</link>
+			<pubDate>Fri, 30 Nov 2018 00:00:00 +0000</pubDate>
+			
+			<guid>https://davesmith00000.github.io/fppixels/posts/2018-11-30-devlog-1/</guid>
+			<description>I’ve had an idea for a game - as yet untitled - rattling around in my head for quite a while now, but attempts to actually build it have been a bit fruitless so far.
+At first, that was because I couldn’t find a game engine I liked*. Later it was because, out of sheer frustration at the state of game dev tooling, I stopped to write my own game engine (Indigo).</description>
+			<content type="html"><![CDATA[<p><img src="/fppixels/images/fallAndStop2.gif" alt="img" /></p>
+
+<p>I’ve had an idea for a game - as yet untitled - rattling around in my head for quite a while now, but attempts to actually build it have been a bit fruitless so far.</p>
+
+<p>At first, that was because I couldn’t find a game engine I liked*. Later it was because, out of sheer frustration at the state of game dev tooling, I stopped to write my own game engine (Indigo).</p>
+
+<p>Having recently finished <a href="https://fppixels.tumblr.com/post/180236288296/snake-in-scalajs-this-was-a-milestone-week">Snake</a>, I’m now at a point where I’m ready to pick up where I left off on the untitled game. The development of my little game will inevitably lead to me into being sidetracked onto missing engine features back in Indigo, and so progress will be slow.</p>
+
+<p>Anyway, what I have so far can be seen in the placeholder-graphics-laden screenshot above. You can see the cursor too unfortunately, but that&rsquo;s due to the screen capture software.</p>
+
+<p>Note that after the naked dude lands he wanders off to the right. This little behaviour is hard coded.</p>
+
+<p>The plan eventually is to have the little guy walk around and do things in a fairly self directed way, which leads me to what I’m working on at the moment:</p>
+
+<ol>
+<li>In order to have the naked guy do things (e.g. &hellip;find some clothes**), he needs a list of jobs.</li>
+<li>To manage a list of jobs, including finding or generating more work, I need a little job system of some kind.</li>
+<li>I could just munge that into the game code, but I’ve noticed a pattern emerging that I’ve decided to encode into the engine which allows for the creation of little event driven subsystems that don’t require much explicit set up or management. This, I believe, would also allow me to clean up and standardise a number of other areas of Indigo’s implementation.</li>
+</ol>
+
+<p>…and that’s what I’m doing now. See, I told you I’d end up working on Indigo instead of the game!</p>
+
+<hr />
+
+<p>* I can say that after quite a lot of reading around and trying things where possible: If I wasn’t a language snob, if I ever wanted to actually make a living as a commercial games developer, as a one man band, who is very much a programmer, who won&rsquo;t work on windows, refuses to use C++, thinks C# dev tools on a mac are still awful, and demands a statically typed language with functional niceties (lambda syntax, ADT’s, implicits, parametric types etc.) …I would, and indeed should be using <a href="https://haxe.org/">Haxe</a>.</p>
+
+<p>** He’s not naked for any good reason.</p>
+]]></content>
+		</item>
+		
+		<item>
+			<title>A Thundering Herd of Naked Dudes!</title>
+			<link>https://davesmith00000.github.io/fppixels/posts/2018-11-20-thundering-herd/</link>
+			<pubDate>Tue, 20 Nov 2018 00:00:00 +0000</pubDate>
+			
+			<guid>https://davesmith00000.github.io/fppixels/posts/2018-11-20-thundering-herd/</guid>
+			<description>This is a thundering herd of 5000 naked dudes.**
+They are here to complain about the fact that Indigo allocates far too often, causing garbage collections that hurt performance in busy scenes. Unfortunately, while the concerns of the amassed pixelated naturists have been heard and acknowledged &amp;hellip;they&amp;rsquo;ll just have to wait.
+Performance is good enough for now, my time is limited, and I&amp;rsquo;m still collecting data. That said! I&amp;rsquo;d like to offer an example what direction the data I&amp;rsquo;ve collected so far is pointing in:</description>
+			<content type="html"><![CDATA[<p><img src="/fppixels/images/thundering_herd.png" alt="img" /></p>
+
+<p>This is a thundering herd of 5000 naked dudes.**</p>
+
+<p>They are here to complain about the fact that Indigo allocates far too often, causing garbage collections that hurt performance in busy scenes. Unfortunately, while the concerns of the amassed pixelated naturists have been heard and acknowledged &hellip;they&rsquo;ll just have to wait.</p>
+
+<p>Performance is good enough for now, my time is limited, and I&rsquo;m still collecting data. That said! I&rsquo;d like to offer an example what direction the data I&rsquo;ve collected so far is pointing in:</p>
+
+<p>Indigo&rsquo;s internal reporting system reckons the thundering herd scene causes it to spend its time in roughly these proportions&hellip;</p>
+
+<pre><code>Model update:         0.11%
+View model update:    0.11%
+Call view update:     9.18%
+Process view:         6.65%
+Convert view:         37.58%
+Render view:          45.41%
+Play audio:           0%
+</code></pre>
+
+<p>I&rsquo;d hate to jump to any early conclusions, but it may just be possible that the view conversion and rendering stages could use some love.</p>
+
+<p>**Not a real case of <a href="https://en.wikipedia.org/wiki/Thundering_herd_problem">the thundering herd problem</a> &hellip;but I thought it was funny and the name stuck.</p>
+]]></content>
+		</item>
 		
 		<item>
 			<title>Snake in Scala.js</title>
@@ -19,7 +255,7 @@
 			<description>This was a milestone week.
 For the first time in more than a decade, this ex-Flash developer has actually finished making a game.
 Admittedly the game is just a Snake clone, nothing fancy, but it is built on top of a custom engine I&amp;rsquo;m calling Indigo. Limited as Snake&amp;rsquo;s development needs were, getting from &amp;ldquo;it kinda works!&amp;rdquo; to &amp;ldquo;it&amp;rsquo;s kinda finished!&amp;rdquo; has helped drive out a surprising number of engine requirements.</description>
-			<content type="html"><![CDATA[<p><img src="/static/images/fallAndStop2.gif" alt="img" /></p>
+			<content type="html"><![CDATA[<p><img src="/fppixels/images/snake.png" alt="img" /></p>
 
 <p>This was a milestone week.</p>
 
@@ -44,18 +280,37 @@ Admittedly the game is just a Snake clone, nothing fancy, but it is built on top
 		</item>
 		
 		<item>
-			<title>Never build a game engine</title>
-			<link>https://davesmith00000.github.io/fppixels/posts/2018-11-14-never/</link>
-			<pubDate>Wed, 14 Nov 2018 00:00:00 +0000</pubDate>
+			<title>Combining S and K</title>
+			<link>https://davesmith00000.github.io/fppixels/posts/2017-10-27-combining-s-and-k/</link>
+			<pubDate>Fri, 27 Oct 2017 00:00:00 +0000</pubDate>
 			
-			<guid>https://davesmith00000.github.io/fppixels/posts/2018-11-14-never/</guid>
-			<description>&amp;ldquo;Never build your own game engine. Almost never.&amp;rdquo;
- — The sum of all internet wisdom on the subject of building custom game engines.</description>
-			<content type="html"><![CDATA[<blockquote>
-<p>&ldquo;Never build your own game engine. Almost never.&rdquo;</p>
-</blockquote>
+			<guid>https://davesmith00000.github.io/fppixels/posts/2017-10-27-combining-s-and-k/</guid>
+			<description>While attempting to follow an Agda tutorial in Scala (CS410 2017 Lecture 2 (more Programs and Proofs, introducing &amp;ldquo;with&amp;rdquo;) - Conor McBride), some understanding of combinators S and K finally began to dawn.
+“It is perhaps astonishing that S and K can be composed to produce combinators that are extensionally equal to any lambda term, and therefore, by Church&amp;rsquo;s thesis, to any computable function whatsoever” ~ Combinatory Logic, Wikipedia 27/10/17</description>
+			<content type="html"><![CDATA[<p>While attempting to follow an Agda tutorial in Scala (<a href="https://www.youtube.com/watch?v=qcVZxQTouDk">CS410 2017 Lecture 2 (more Programs and Proofs, introducing &ldquo;with&rdquo;) - Conor McBride</a>), some understanding of combinators S and K finally began to dawn.</p>
 
-<p>— The sum of all internet wisdom on the subject of building custom game engines.</p>
+<p>“It is perhaps astonishing that S and K can be composed to produce combinators that are extensionally equal to any lambda term, and therefore, by Church&rsquo;s thesis, to any computable function whatsoever” ~ <a href="https://en.wikipedia.org/wiki/Combinatory_logic">Combinatory Logic, Wikipedia 27/10/17</a></p>
+
+<p>Here they are presented in Scala:</p>
+<div class="highlight"><pre class="chroma"><code class="language-scala" data-lang="scala"><span class="k">def</span> <span class="n">combinatorK</span><span class="o">[</span><span class="kt">A</span>, <span class="kt">E</span><span class="o">]</span><span class="k">:</span> <span class="kt">A</span> <span class="o">=&gt;</span> <span class="n">E</span> <span class="k">=&gt;</span> <span class="n">A</span> <span class="k">=</span>
+  <span class="n">a</span> <span class="k">=&gt;</span> <span class="k">_</span> <span class="k">=&gt;</span> <span class="n">a</span>
+
+<span class="k">def</span> <span class="n">combinatorS</span><span class="o">[</span><span class="kt">E</span>, <span class="kt">S</span>, <span class="kt">T</span><span class="o">]</span><span class="k">:</span> <span class="o">(</span><span class="kt">E</span> <span class="o">=&gt;</span> <span class="kt">S</span> <span class="o">=&gt;</span> <span class="n">T</span><span class="o">)</span> <span class="k">=&gt;</span> <span class="o">(</span><span class="n">E</span> <span class="k">=&gt;</span> <span class="n">S</span><span class="o">)</span> <span class="k">=&gt;</span> <span class="n">E</span> <span class="k">=&gt;</span> <span class="n">T</span> <span class="k">=</span>
+  <span class="n">est</span> <span class="k">=&gt;</span> <span class="n">es</span> <span class="k">=&gt;</span>
+    <span class="o">(</span><span class="n">e</span><span class="k">:</span> <span class="kt">E</span><span class="o">)</span> <span class="k">=&gt;</span> <span class="n">est</span><span class="o">(</span><span class="n">e</span><span class="o">)(</span><span class="n">es</span><span class="o">(</span><span class="n">e</span><span class="o">))</span></code></pre></div>
+<p>Using S and K to build an identity function. Watch the tutorial to find out why <code>X</code> and <code>Any</code> are needed here:</p>
+<div class="highlight"><pre class="chroma"><code class="language-scala" data-lang="scala"><span class="k">def</span> <span class="n">id</span><span class="o">[</span><span class="kt">X</span><span class="o">]</span><span class="k">:</span> <span class="kt">X</span> <span class="o">=&gt;</span> <span class="n">X</span> <span class="k">=</span>
+  <span class="n">combinatorS</span><span class="o">(</span><span class="n">combinatorK</span><span class="o">[</span><span class="kt">X</span>, <span class="kt">Any</span><span class="o">])(</span><span class="n">combinatorK</span><span class="o">)</span></code></pre></div>
+<p>Examples:</p>
+<div class="highlight"><pre class="chroma"><code class="language-scala" data-lang="scala"><span class="n">combinatorK</span><span class="o">(</span><span class="s">&#34;Hello&#34;</span><span class="o">)(</span><span class="mi">10</span><span class="o">)</span>
+<span class="c1">//res0: String = Hello
+</span><span class="c1"></span>
+<span class="n">combinatorS</span><span class="o">((</span><span class="k">_:</span> <span class="kt">Int</span><span class="o">)</span> <span class="k">=&gt;</span> <span class="o">(</span><span class="n">s</span><span class="k">:</span> <span class="kt">String</span><span class="o">)</span> <span class="k">=&gt;</span> <span class="n">s</span><span class="o">.</span><span class="n">length</span> <span class="o">&gt;</span> <span class="mi">5</span><span class="o">)((</span><span class="k">_:</span> <span class="kt">Int</span><span class="o">).</span><span class="n">toString</span><span class="o">)(</span><span class="mi">100010</span><span class="o">)</span>
+<span class="c1">//res1: Boolean = true
+</span><span class="c1"></span>
+<span class="n">id</span><span class="o">(</span><span class="err">“</span><span class="n">foo</span><span class="err">”</span><span class="o">)</span>
+<span class="o">//</span><span class="n">res2</span><span class="k">:</span> <span class="kt">String</span> <span class="o">=</span> <span class="n">foo</span></code></pre></div>
+<p>&hellip;and if you liked that, maybe you should take a peek at <a href="https://en.wikipedia.org/wiki/Unlambda">Unlambda</a>?</p>
 ]]></content>
 		</item>
 		

@@ -3,18 +3,33 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://davesmith00000.github.io/fppixels/posts/2018-12-23-games-without-effects/</loc>
+    <lastmod>2018-12-23T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://davesmith00000.github.io/fppixels/posts/2018-12-16-big-beautiful-packages/</loc>
+    <lastmod>2018-12-16T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://davesmith00000.github.io/fppixels/posts/2018-11-30-devlog-1/</loc>
+    <lastmod>2018-11-30T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://davesmith00000.github.io/fppixels/posts/2018-11-20-thundering-herd/</loc>
+    <lastmod>2018-11-20T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://davesmith00000.github.io/fppixels/posts/2018-11-18-snake-scalajs/</loc>
     <lastmod>2018-11-18T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://davesmith00000.github.io/fppixels/posts/2018-11-14-never/</loc>
-    <lastmod>2018-11-14T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://davesmith00000.github.io/fppixels/about-fp-pixels/</loc>
-    <lastmod>2014-04-09T00:00:00+00:00</lastmod>
+    <loc>https://davesmith00000.github.io/fppixels/posts/2017-10-27-combining-s-and-k/</loc>
+    <lastmod>2017-10-27T00:00:00+00:00</lastmod>
   </url>
   
   <url>
@@ -24,19 +39,23 @@
   
   <url>
     <loc>https://davesmith00000.github.io/fppixels/</loc>
-    <lastmod>2018-11-18T00:00:00+00:00</lastmod>
+    <lastmod>2018-12-23T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://davesmith00000.github.io/fppixels/posts/</loc>
-    <lastmod>2018-11-18T00:00:00+00:00</lastmod>
+    <lastmod>2018-12-23T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://davesmith00000.github.io/fppixels/tags/</loc>
     <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://davesmith00000.github.io/fppixels/about-fp-pixels/</loc>
   </url>
   
 </urlset>
