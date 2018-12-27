@@ -7,8 +7,88 @@
 		<generator>Hugo -- gohugo.io</generator>
 		<language>en-gb</language>
 		<copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
-		<lastBuildDate>Sun, 23 Dec 2018 00:00:00 +0000</lastBuildDate>
+		<lastBuildDate>Thu, 27 Dec 2018 00:00:00 +0000</lastBuildDate>
 		<atom:link href="https://davesmith00000.github.io/fppixels/posts/index.xml" rel="self" type="application/rss+xml" />
+		
+		<item>
+			<title>Contravariant Functor Spotting</title>
+			<link>https://davesmith00000.github.io/fppixels/posts/2018-12-27-contravariant-functor-spotting/</link>
+			<pubDate>Thu, 27 Dec 2018 00:00:00 +0000</pubDate>
+			
+			<guid>https://davesmith00000.github.io/fppixels/posts/2018-12-27-contravariant-functor-spotting/</guid>
+			<description>There are lots of explanations out there on the interwebs about contravariant functors, and perhaps I’m just a bit dim in some regards, but it took me quite a while to get a handle on them.
+Start with Why. The main issue I have when grappling with some new FP concept is &amp;ldquo;why&amp;rdquo;. For what do I need this? Most tutorials and discussions satisfy themselves with either a terse showing of this slightly weird function signature:</description>
+			<content type="html"><![CDATA[
+
+<p>There are lots of explanations out there on the interwebs about contravariant functors, and perhaps I’m just a bit dim in some regards, but it took me quite a while to get a handle on them.</p>
+
+<h2 id="start-with-why">Start with Why.</h2>
+
+<p>The main issue I have when grappling with some new FP concept is &ldquo;why&rdquo;. For what do I need this? Most tutorials and discussions satisfy themselves with either a terse showing of this slightly weird function signature:</p>
+<div class="highlight"><pre class="chroma"><code class="language-scala" data-lang="scala"><span class="k">def</span> <span class="n">contramap</span><span class="o">[</span><span class="kt">A</span>, <span class="kt">B</span><span class="o">](</span><span class="n">fa</span><span class="k">:</span> <span class="kt">F</span><span class="o">[</span><span class="kt">A</span><span class="o">])(</span><span class="n">f</span><span class="k">:</span> <span class="kt">B</span> <span class="o">=&gt;</span> <span class="n">A</span><span class="o">)</span><span class="k">:</span> <span class="kt">F</span><span class="o">[</span><span class="kt">B</span><span class="o">]</span>
+
+<span class="c1">// ..also sometimes (I think more helpfully) rearranged and written as:
+</span><span class="c1"></span>
+<span class="k">def</span> <span class="n">contramap</span><span class="o">[</span><span class="kt">A</span>, <span class="kt">B</span><span class="o">](</span><span class="n">f</span><span class="k">:</span> <span class="kt">B</span> <span class="o">=&gt;</span> <span class="n">A</span><span class="o">)</span><span class="k">:</span> <span class="kt">F</span><span class="o">[</span><span class="kt">A</span><span class="o">]</span> <span class="k">=&gt;</span> <span class="n">F</span><span class="o">[</span><span class="kt">B</span><span class="o">]</span></code></pre></div>
+<p>&ldquo;I mean where do you get the <code>B</code> from anyway?&rdquo; I wondered aloud on a number of occasions assuming it worked the way <code>Functor</code> worked.</p>
+
+<p>Alternatively, the tutorials give an example of it’s usage, usually by going on about why it’s perfect for implementing <code>Ordering[T]</code>. Which is true, but I didn’t find it immediately obvious why!</p>
+
+<p>Oh yeah and everyone will tell you that a Functor is a producer and a Contravariant Functor is a consumer. Ok. Thanks.</p>
+
+<p>What they generally don’t explain is why I would want to do such a thing. That’s a shame, because if you can convey to me the idea of the kind of scenario in which this construct is useful, then I stand a chance of spotting the use case out in the wild.</p>
+
+<h2 id="a-rule-of-thumb">A Rule of Thumb.</h2>
+
+<p>So here goes nothing, I shall now attempt to describe a general scenario in which contravariant functors are useful:</p>
+
+<blockquote>
+<p>A contravariant functor is useful when you need to build an instance of a higherkinded type, such as a typeclass, and the most convenient method of doing that is to base your new typeclass on an existing one, accepting the limits of what that existing version is capable of.</p>
+</blockquote>
+
+<p>Now armed with that idea, I&rsquo;ll fall back on the <code>Ordering[T]</code> example:</p>
+
+<ol>
+<li>I want to order a <code>List[Person]</code>, which means I need an <code>Ordering[Person]</code> instance.</li>
+<li>There already exists an <code>Ordering[Int]</code> instance, it’s part of the standard library.</li>
+<li>I can <em>consume</em> a <code>Person</code> to get out some arbitrarily meaningful <code>Int</code> to sort against, by making a function <code>f</code> that maps <code>Person =&gt; Int</code> e.g. <code>person =&gt; person.age</code></li>
+<li>It would then be nice if I could <em>improve</em> <code>Ordering[Int]</code> to <em>produce</em> an <code>Ordering[Person]</code> instance i.e. <code>Ordering[Int] =&gt; Ordering[Person]</code> by making use of the <code>f</code> function in the previous step.</li>
+</ol>
+
+<p>That &ldquo;improving&rdquo; of <code>Ordering[Int]</code> to produce <code>Ordering[Person]</code> is what <code>contramap</code> does. e.g.:</p>
+<div class="highlight"><pre class="chroma"><code class="language-scala" data-lang="scala"><span class="k">import</span> <span class="nn">scala.language.higherKinds</span>
+
+<span class="k">trait</span> <span class="nc">Contravariant</span><span class="o">[</span><span class="kt">F</span><span class="o">[</span><span class="k">_</span><span class="o">]]</span> <span class="o">{</span>
+  <span class="k">def</span> <span class="n">contramap</span><span class="o">[</span><span class="kt">A</span>, <span class="kt">B</span><span class="o">](</span><span class="n">fa</span><span class="k">:</span> <span class="kt">F</span><span class="o">[</span><span class="kt">A</span><span class="o">])(</span><span class="n">f</span><span class="k">:</span> <span class="kt">B</span> <span class="o">=&gt;</span> <span class="n">A</span><span class="o">)</span><span class="k">:</span> <span class="kt">F</span><span class="o">[</span><span class="kt">B</span><span class="o">]</span>
+<span class="o">}</span>
+
+<span class="k">case</span> <span class="k">class</span> <span class="nc">Person</span><span class="o">(</span><span class="n">age</span><span class="k">:</span> <span class="kt">Int</span><span class="o">,</span> <span class="n">name</span><span class="k">:</span> <span class="kt">String</span><span class="o">)</span>
+<span class="k">object</span> <span class="nc">Person</span> <span class="o">{</span>
+
+  <span class="c1">// Our aim is to make this:
+</span><span class="c1"></span>  <span class="c1">// implicit def ordering[A &lt;: Person]: Ordering[A] =
+</span><span class="c1"></span>  <span class="c1">//   Ordering.by(p =&gt; p.age)
+</span><span class="c1"></span>
+  <span class="k">val</span> <span class="n">orderingCV</span><span class="k">:</span> <span class="kt">Contravariant</span><span class="o">[</span><span class="kt">Ordering</span><span class="o">]</span> <span class="k">=</span>
+    <span class="k">new</span> <span class="nc">Contravariant</span><span class="o">[</span><span class="kt">Ordering</span><span class="o">]</span> <span class="o">{</span>
+      <span class="k">def</span> <span class="n">contramap</span><span class="o">[</span><span class="kt">A</span>, <span class="kt">B</span><span class="o">](</span><span class="n">fa</span><span class="k">:</span> <span class="kt">Ordering</span><span class="o">[</span><span class="kt">A</span><span class="o">])(</span><span class="n">f</span><span class="k">:</span> <span class="kt">B</span> <span class="o">=&gt;</span> <span class="n">A</span><span class="o">)</span><span class="k">:</span> <span class="kt">Ordering</span><span class="o">[</span><span class="kt">B</span><span class="o">]</span> <span class="k">=</span>
+        <span class="nc">Ordering</span><span class="o">[</span><span class="kt">B</span><span class="o">]((</span><span class="n">b1</span><span class="k">:</span> <span class="kt">B</span><span class="o">,</span> <span class="n">b2</span><span class="k">:</span> <span class="kt">B</span><span class="o">)</span> <span class="k">=&gt;</span> <span class="n">fa</span><span class="o">.</span><span class="n">compare</span><span class="o">(</span><span class="n">f</span><span class="o">(</span><span class="n">b1</span><span class="o">),</span> <span class="n">f</span><span class="o">(</span><span class="n">b2</span><span class="o">)))</span>
+    <span class="o">}</span>
+
+  <span class="k">implicit</span> <span class="k">val</span> <span class="n">ordering</span><span class="k">:</span> <span class="kt">Ordering</span><span class="o">[</span><span class="kt">Person</span><span class="o">]</span> <span class="k">=</span>
+    <span class="n">orderingCV</span><span class="o">.</span><span class="n">contramap</span><span class="o">[</span><span class="kt">Int</span>, <span class="kt">Person</span><span class="o">](</span><span class="nc">Ordering</span><span class="o">.</span><span class="nc">Int</span><span class="o">)(</span><span class="k">_</span><span class="o">.</span><span class="n">age</span><span class="o">)</span>
+
+<span class="o">}</span>
+
+<span class="nc">List</span><span class="o">(</span><span class="nc">Person</span><span class="o">(</span><span class="mi">10</span><span class="o">,</span> <span class="s">&#34;bob&#34;</span><span class="o">),</span> <span class="nc">Person</span><span class="o">(</span><span class="mi">2</span><span class="o">,</span> <span class="s">&#34;Sally&#34;</span><span class="o">)).</span><span class="n">sorted</span>
+<span class="o">//</span> <span class="nc">List</span><span class="o">(</span><span class="nc">Person</span><span class="o">(</span><span class="mi">2</span><span class="o">,</span> <span class="s">&#34;Sally&#34;</span><span class="o">),</span> <span class="nc">Person</span><span class="o">(</span><span class="mi">10</span><span class="o">,</span> <span class="s">&#34;bob&#34;</span><span class="o">))</span></code></pre></div>
+<h2 id="get-the-gist">Get the gist?</h2>
+
+<p>The thing about the ordering example is that while it feels like an obvious use case&hellip; once you see it well&hellip; it looks it bit sort of thin.</p>
+
+<p>The way I actually got to grips with this was to work though a different problem entirely, which is available <a href="https://gist.github.com/davesmith00000/db8f066018f048bd9350db1a14004952">here in this gist</a> if you’re interested.</p>
+]]></content>
+		</item>
 		
 		<item>
 			<title>Building Games Without Effects</title>

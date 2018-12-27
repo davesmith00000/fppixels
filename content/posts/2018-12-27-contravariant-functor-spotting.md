@@ -1,6 +1,6 @@
 ---
 author: "Dave Smith"
-date: 2018-12-24
+date: 2018-12-27
 title: Contravariant Functor Spotting
 draft: false
 ---
@@ -27,7 +27,7 @@ Oh yeah and everyone will tell you that a Functor is a producer and a Contravari
 
 What they generally don’t explain is why I would want to do such a thing. That’s a shame, because if you can convey to me the idea of the kind of scenario in which this construct is useful, then I stand a chance of spotting the use case out in the wild.
 
-## Contravariant Functor Spotting
+## A Rule of Thumb.
 
 So here goes nothing, I shall now attempt to describe a general scenario in which contravariant functors are useful:
 
@@ -74,6 +74,6 @@ List(Person(10, "bob"), Person(2, "Sally")).sorted
 
 ## Get the gist?
 
-The thing about the ordering example, is that while it feels like the obvious use case once you get it... it looks it bit... thin.
+The thing about the ordering example is that while it feels like an obvious use case... once you see it well... it looks it bit sort of thin.
 
-In order to get to grips with this, I worked through a different problem in a gist, which is available [here](https://gist.github.com/davesmith00000/db8f066018f048bd9350db1a14004952) if you’re interested.
+The way I actually got to grips with this was to work though a different problem entirely, which is available [here in this gist](https://gist.github.com/davesmith00000/db8f066018f048bd9350db1a14004952) if you’re interested.
