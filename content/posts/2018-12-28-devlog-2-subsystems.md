@@ -2,7 +2,7 @@
 author: "Dave Smith"
 date: 2019-01-01
 title: "Devlog 2: Sub-Systems"
-draft: true
+draft: false
 ---
 
 In my first devlog I mentioned the idea of adding sub-systems to Indigo so that I could nicely organise a job system for the game I'm working on.
@@ -18,7 +18,7 @@ The example above uses two sub-systems:
 1. A simple sub-system to count the total points
 2. Another called an Automata Farm that handles the animated points that appear when the mouse button is clicked.
 
-I'm not going to get into the Automata Farm now, but this existed long before sub-systems and it's been fun converting it to the new sub-system approach, and the result is much cleaner implementation.
+I'm not going to talk about the Automata Farm now. It existed long before sub-systems and it's been fun converting it to the new cleaner sub-system approach.
 
 ## What makes a Sub-System?
 
@@ -42,15 +42,15 @@ The interesting thing about sub-systems is that the definition above is really j
 
 The main game loop essentially has three stages:
 
-1. Update the model(s)
-2. Update the view model(s)
+1. Update the models
+2. Update the view models
 3. Present the scene
 
-A sub-system just does 1 and 3 since 2 felt like overkill.
+A sub-system just does 1 and 3, since 2 felt like overkill for what are supposed to be small processes.
 
 During update, the game loop propagates each event from an immutable list of "stuff that happened in the previous frame" to all of the sub-systems and the user defined game functions. Each of those functions results in an `Update<Thing>` type such as the `UpdateSubSystem` above. `UpdateSubSystem` includes the next version of the sub-system (i.e. state that progresses over time) and a list of output events (consequences) that occurred as part of the update process. The state is persisted and the events are queued up ready to be processed on the next frame.
 
-Render (or present - terminology is a bit inconsistent) is then called everywhere which eventually results in a list of `SceneUpdateFragment`s. Since the fragments are Monoids they are simply folded together to create the final scene to be presented.
+Render (or present - terminology is a bit inconsistent at the moment) is then called everywhere which eventually results in a list of `SceneUpdateFragment`s. Since the fragments are Monoids they are simply folded together to create the final scene to be presented.
 
 Here is our points tracker (the top left bit of the screenshot):
 
@@ -86,7 +86,7 @@ In this example the event type didn't need to be an ADT, but I wanted to show th
 
 ## Integrating a Sub-System
 
-The whole point of sub-systems is that you set them up, send them events, and let the engine take care of the boring details. So integration is pretty clean and minimal.
+A big part of point of sub-systems is that you set them up, send them events, and let the engine take care of the boring details. The other side is there sub systems are for modelling things that are fairly loosely coupled, components you can write a test in isolation and that you don't want cluttering up your game code. As such, the integration code is very light.
 
 The first thing we have to do is register our sub-systems, like this:
 
@@ -109,9 +109,11 @@ def update(gameTime: GameTime, model: Unit): GlobalEvent => UpdatedModel[Unit] =
 }
 ```
 
-Likewise, rendering is taken care of because each sub-system is rendered in the background and our game only uses sub-systems to do all the presenting.
+Likewise, rendering is taken care of because each sub-system is rendered separately in the background and our game only uses sub-systems to do all the presenting.
 
 ```scala
 def present(gameTime: GameTime, model: Unit, viewModel: Unit, frameInputEvents: FrameInputEvents): SceneUpdateFragment =
-    noRender
+    noRender 
 ```
+
+Nice and easy.
