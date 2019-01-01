@@ -5,7 +5,7 @@ title: "Devlog 2: Sub-Systems"
 draft: true
 ---
 
-In my first devlog I mentioned adding the idea of sub-systems to Indigo so that I could nicely organise a job system for the game I'm working on.
+In my first devlog I mentioned the idea of adding sub-systems to Indigo so that I could nicely organise a job system for the game I'm working on.
 
 The sub-systems came together quickly and easily, but the job system is still a work in progress. Since I haven't written for a while though, I thought I'd explain what sub-systems are and how they work.
 
