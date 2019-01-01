@@ -3,6 +3,9 @@
 *.log
 .DS_Store
 
+# hugo
+public/
+
 # sbt specific
 sbt
 .sbt-local
