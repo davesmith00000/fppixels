@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en-gb">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<link rel="apple-touch-icon" sizes="180x180" href="/fppixels/apple-touch-icon.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="/fppixels/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="/fppixels/favicon-16x16.png">
+	<link rel="manifest" href="/fppixels/site.webmanifest">
+	<link rel="mask-icon" href="/fppixels/safari-pinned-tab.svg" color="">
+	<link rel="shortcut icon" href="/fppixels/favicon.ico">
+	<title>Devlog 2: Sub-Systems</title>
+	<link rel="stylesheet" href="/fppixels/css/style.min.857f4a4adceba73f2fc8a745f8ca8b08437800bdf1c3275e2c7360f4994644ba.css" integrity="sha256-hX9KStzrpz8vyKdF+MqLCEN4AL3xwydeLHNg9JlGRLo=">
+	
+</head>
+
+<body id="page">
+	
+	<header id="site-header" class="animated slideInUp faster">
+		<div class="hdr-wrapper section-inner">
+			<div class="hdr-left">
+				<div class="site-branding">
+					<a href="https://davesmith00000.github.io/fppixels/">FP Pixels</a>
+				</div>
+				<nav class="site-nav hide-in-mobile">
+					<a href="/fppixels/posts/">Posts</a>
+					<a href="/fppixels/about-fp-pixels/">About</a>
+				</nav>
+			</div>
+			<div class="hdr-right hdr-icons">
+				<span class="hdr-social hide-in-mobile"><a href="https://twitter.com/davidjamessmith" target="_blank" rel="noopener"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-twitter"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path></svg></a><a href="https://github.com/davesmith00000" target="_blank" rel="noopener"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-github"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg></a></span><button id="menu-btn" class="hdr-btn"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></button>
+			</div>
+		</div>
+	</header>
+	<div id="mobile-menu" class="animated fast" style="display: none;">
+		<ul>
+			<li><a href="/fppixels/posts/">Posts</a></li>
+			<li><a href="/fppixels/about-fp-pixels/">About</a></li>
+		</ul>
+	</div>
+
+
+	<main class="site-main section-inner animated fadeIn faster">
+		<article class="thin">
+			<header class="post-header">
+				<div class="post-meta"><span>Jan 1, 2019</span></div>
+				<h1>Devlog 2: Sub-Systems</h1>
+			</header>
+			<div class="content">
+				
+
+<p>In my first devlog I mentioned the idea of adding sub-systems to Indigo so that I could nicely organise a job system for the game I&rsquo;m working on.</p>
+
+<p>The sub-systems came together quickly and easily, but the job system is still a work in progress. Since I haven&rsquo;t written for a while though, I thought I&rsquo;d explain what sub-systems are and how they work.</p>
+
+<h2 id="quick-example">Quick Example</h2>
+
+<p><img src="/fppixels/images/subsystems-example.gif" alt="img" /></p>
+
+<p>The example above uses two sub-systems:</p>
+
+<ol>
+<li>A simple sub-system to count the total points</li>
+<li>Another called an Automata Farm that handles the animated points that appear when the mouse button is clicked.</li>
+</ol>
+
+<p>I&rsquo;m not going to talk about the Automata Farm now. It existed long before sub-systems and it&rsquo;s been fun converting it to the new cleaner sub-system approach.</p>
+
+<h2 id="what-makes-a-sub-system">What makes a Sub-System?</h2>
+
+<p>Here is the definition of a <code>SubSystem</code>:</p>
+<div class="highlight"><pre class="chroma"><code class="language-scala" data-lang="scala"><span class="k">trait</span> <span class="nc">SubSystem</span> <span class="o">{</span>
+  <span class="k">type</span> <span class="kt">EventType</span>
+
+  <span class="k">val</span> <span class="n">eventFilter</span><span class="k">:</span> <span class="kt">GlobalEvent</span> <span class="o">=&gt;</span> <span class="nc">Option</span><span class="o">[</span><span class="kt">EventType</span><span class="o">]</span>
+
+  <span class="k">def</span> <span class="n">update</span><span class="o">(</span><span class="n">gameTime</span><span class="k">:</span> <span class="kt">GameTime</span><span class="o">)</span><span class="k">:</span> <span class="kt">EventType</span> <span class="o">=&gt;</span> <span class="nc">UpdatedSubSystem</span>
+
+  <span class="k">def</span> <span class="n">render</span><span class="o">(</span><span class="n">gameTime</span><span class="k">:</span> <span class="kt">GameTime</span><span class="o">)</span><span class="k">:</span> <span class="kt">SceneUpdateFragment</span>
+
+  <span class="k">def</span> <span class="n">report</span><span class="k">:</span> <span class="kt">String</span>
+<span class="o">}</span></code></pre></div>
+<p>The interesting thing about sub-systems is that the definition above is really just a cut down version of the functions that make up the entire game engine.</p>
+
+<p>The main game loop essentially has three stages:</p>
+
+<ol>
+<li>Update the models</li>
+<li>Update the view models</li>
+<li>Present the scene</li>
+</ol>
+
+<p>A sub-system just does 1 and 3, since 2 felt like overkill for what are supposed to be small processes.</p>
+
+<p>During update, the game loop propagates each event from an immutable list of &ldquo;stuff that happened in the previous frame&rdquo; to all of the sub-systems and the user defined game functions. Each of those functions results in an <code>Update&lt;Thing&gt;</code> type such as the <code>UpdateSubSystem</code> above. <code>UpdateSubSystem</code> includes the next version of the sub-system (i.e. state that progresses over time) and a list of output events (consequences) that occurred as part of the update process. The state is persisted and the events are queued up ready to be processed on the next frame.</p>
+
+<p>Render (or present - terminology is a bit inconsistent at the moment) is then called everywhere which eventually results in a list of <code>SceneUpdateFragment</code>s. Since the fragments are Monoids they are simply folded together to create the final scene to be presented.</p>
+
+<p>Here is our points tracker (the top left bit of the screenshot):</p>
+<div class="highlight"><pre class="chroma"><code class="language-scala" data-lang="scala"><span class="k">final</span> <span class="k">case</span> <span class="k">class</span> <span class="nc">PointsTrackerSubSystem</span><span class="o">(</span><span class="n">points</span><span class="k">:</span> <span class="kt">Int</span><span class="o">,</span> <span class="n">fontKey</span><span class="k">:</span> <span class="kt">FontKey</span><span class="o">)</span> <span class="k">extends</span> <span class="nc">SubSystem</span> <span class="o">{</span>
+  <span class="k">type</span> <span class="kt">EventType</span> <span class="o">=</span> <span class="nc">PointsTrackerEvent</span>
+
+  <span class="k">val</span> <span class="n">eventFilter</span><span class="k">:</span> <span class="kt">GlobalEvent</span> <span class="o">=&gt;</span> <span class="nc">Option</span><span class="o">[</span><span class="kt">PointsTrackerEvent</span><span class="o">]</span> <span class="k">=</span> <span class="o">{</span>
+    <span class="k">case</span> <span class="n">e</span><span class="k">:</span> <span class="kt">PointsTrackerEvent</span> <span class="o">=&gt;</span> <span class="nc">Option</span><span class="o">(</span><span class="n">e</span><span class="o">)</span>
+    <span class="k">case</span> <span class="k">_</span>                     <span class="k">=&gt;</span> <span class="nc">None</span>
+  <span class="o">}</span>
+
+  <span class="k">def</span> <span class="n">update</span><span class="o">(</span><span class="n">gameTime</span><span class="k">:</span> <span class="kt">GameTime</span><span class="o">)</span><span class="k">:</span> <span class="kt">PointsTrackerEvent</span> <span class="o">=&gt;</span> <span class="nc">UpdatedSubSystem</span> <span class="k">=</span> <span class="o">{</span>
+    <span class="k">case</span> <span class="nc">PointsTrackerEvent</span><span class="o">.</span><span class="nc">Add</span><span class="o">(</span><span class="n">pts</span><span class="o">)</span> <span class="k">=&gt;</span>
+      <span class="nc">UpdatedSubSystem</span><span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="n">copy</span><span class="o">(</span><span class="n">points</span> <span class="k">=</span> <span class="n">points</span> <span class="o">+</span> <span class="n">pts</span><span class="o">))</span>
+  <span class="o">}</span>
+
+  <span class="k">def</span> <span class="n">render</span><span class="o">(</span><span class="n">gameTime</span><span class="k">:</span> <span class="kt">GameTime</span><span class="o">)</span><span class="k">:</span> <span class="kt">SceneUpdateFragment</span> <span class="o">=</span>
+    <span class="nc">SceneUpdateFragment</span><span class="o">.</span><span class="n">empty</span>
+      <span class="o">.</span><span class="n">addGameLayerNodes</span><span class="o">(</span><span class="nc">Text</span><span class="o">(</span><span class="n">report</span><span class="o">,</span> <span class="mi">10</span><span class="o">,</span> <span class="mi">10</span><span class="o">,</span> <span class="mi">1</span><span class="o">,</span> <span class="n">fontKey</span><span class="o">))</span>
+
+  <span class="k">def</span> <span class="n">report</span><span class="k">:</span> <span class="kt">String</span> <span class="o">=</span>
+    <span class="s">s&#34;&#34;&#34;Points: </span><span class="si">$points</span><span class="s">&#34;&#34;&#34;</span>
+<span class="o">}</span>
+
+<span class="k">sealed</span> <span class="k">trait</span> <span class="nc">PointsTrackerEvent</span> <span class="k">extends</span> <span class="nc">GlobalEvent</span> <span class="k">with</span> <span class="nc">Product</span> <span class="k">with</span> <span class="nc">Serializable</span>
+<span class="k">object</span> <span class="nc">PointsTrackerEvent</span> <span class="o">{</span>
+  <span class="k">final</span> <span class="k">case</span> <span class="k">class</span> <span class="nc">Add</span><span class="o">(</span><span class="n">points</span><span class="k">:</span> <span class="kt">Int</span><span class="o">)</span> <span class="k">extends</span> <span class="nc">PointsTrackerEvent</span>
+<span class="o">}</span></code></pre></div>
+<p>In this example the event type didn&rsquo;t need to be an ADT, but I wanted to show the intended usage.</p>
+
+<h2 id="integrating-a-sub-system">Integrating a Sub-System</h2>
+
+<p>A big part of point of sub-systems is that you set them up, send them events, and let the engine take care of the boring details. The other side is there sub systems are for modelling things that are fairly loosely coupled, components you can write a test in isolation and that you don&rsquo;t want cluttering up your game code. As such, the integration code is very light.</p>
+
+<p>The first thing we have to do is register our sub-systems, like this:</p>
+<div class="highlight"><pre class="chroma"><code class="language-scala" data-lang="scala"><span class="k">val</span> <span class="n">subSystems</span><span class="k">:</span> <span class="kt">Set</span><span class="o">[</span><span class="kt">SubSystem</span><span class="o">]</span> <span class="k">=</span>
+  <span class="nc">Set</span><span class="o">(</span><span class="nc">PointsTrackerSubSystem</span><span class="o">(</span><span class="mi">0</span><span class="o">,</span> <span class="n">fontKey</span><span class="o">))</span></code></pre></div>
+<p>Everything has to be updated, but Indigo takes care of that. The only thing we must do is poke them with relevant events. In this case we send off an &ldquo;Add 10 points&rdquo; event.</p>
+
+<p>Note that the &ldquo;model&rdquo; of this game is of type <code>Unit</code> because there is no model - don&rsquo;t worry about it. Each sub-system <em>is</em> it&rsquo;s own model and we&rsquo;re only using sub-systems in this example.</p>
+<div class="highlight"><pre class="chroma"><code class="language-scala" data-lang="scala"><span class="k">def</span> <span class="n">update</span><span class="o">(</span><span class="n">gameTime</span><span class="k">:</span> <span class="kt">GameTime</span><span class="o">,</span> <span class="n">model</span><span class="k">:</span> <span class="kt">Unit</span><span class="o">)</span><span class="k">:</span> <span class="kt">GlobalEvent</span> <span class="o">=&gt;</span> <span class="nc">UpdatedModel</span><span class="o">[</span><span class="kt">Unit</span><span class="o">]</span> <span class="k">=</span> <span class="o">{</span>
+  <span class="k">case</span> <span class="nc">MouseEvent</span><span class="o">.</span><span class="nc">Click</span><span class="o">(</span><span class="k">_</span><span class="o">,</span> <span class="k">_</span><span class="o">)</span> <span class="k">=&gt;</span>
+    <span class="nc">UpdatedModel</span><span class="o">(()).</span><span class="n">addGlobalEvents</span><span class="o">(</span><span class="nc">PointsTrackerEvent</span><span class="o">.</span><span class="nc">Add</span><span class="o">(</span><span class="mi">10</span><span class="o">))</span>
+
+  <span class="k">case</span> <span class="k">_</span> <span class="k">=&gt;</span>
+    <span class="nc">UpdatedModel</span><span class="o">(())</span>
+<span class="o">}</span></code></pre></div>
+<p>Likewise, rendering is taken care of because each sub-system is rendered separately in the background and our game only uses sub-systems to do all the presenting.</p>
+<div class="highlight"><pre class="chroma"><code class="language-scala" data-lang="scala"><span class="k">def</span> <span class="n">present</span><span class="o">(</span><span class="n">gameTime</span><span class="k">:</span> <span class="kt">GameTime</span><span class="o">,</span> <span class="n">model</span><span class="k">:</span> <span class="kt">Unit</span><span class="o">,</span> <span class="n">viewModel</span><span class="k">:</span> <span class="kt">Unit</span><span class="o">,</span> <span class="n">frameInputEvents</span><span class="k">:</span> <span class="kt">FrameInputEvents</span><span class="o">)</span><span class="k">:</span> <span class="kt">SceneUpdateFragment</span> <span class="o">=</span>
+    <span class="n">noRender</span> </code></pre></div>
+<p>Nice and easy.</p>
+
+			</div>
+			<hr class="post-end">
+			<footer class="post-info">
+				<p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>697 Words</p>
+				<p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-calendar"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>2019-01-01 00:00 &#43;0000</p>
+			</footer>
+		</article>
+		<div class="post-nav thin">
+			<a class="prev-post" href="https://davesmith00000.github.io/fppixels/posts/2018-12-27-contravariant-functor-spotting/">
+				<span class="post-nav-label">Older&nbsp;<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span><br><span>Contravariant Functor Spotting</span>
+			</a>
+		</div>
+	</main>
+
+	<footer id="site-footer" class="section-inner thin animated fadeIn faster">
+		<p>&copy; 2019 <a href="https://davesmith00000.github.io/fppixels/">Dave Smith</a> &#183; <a href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener">CC BY-NC 4.0</a></p>
+		<p>Made with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> &#183; Theme <a href="https://github.com/Track3/hermit" target="_blank" rel="noopener">Hermit</a> &#183; <a href="https://davesmith00000.github.io/fppixels/posts/index.xml" target="_blank" title="rss"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-rss"><path d="M4 11a9 9 0 0 1 9 9"></path><path d="M4 4a16 16 0 0 1 16 16"></path><circle cx="5" cy="19" r="1"></circle></svg></a></p>
+	</footer>
+
+	<script>let haveHeader = true;</script>
+
+	<script src="/fppixels/js/main.min.00689ba18bbf9422fda222b02b555f01d54bfbb9b6d02f9bcffad67bdb2ff2cd.js" integrity="sha256-AGiboYu/lCL9oiKwK1VfAdVL+7m20C+bz/rWe9sv8s0="></script>
+	
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-129418446-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+</body>
+
+</html>

@@ -7,10 +7,21 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-gb</language>
     <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
-    <lastBuildDate>Thu, 27 Dec 2018 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 01 Jan 2019 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://davesmith00000.github.io/fppixels/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Devlog 2: Sub-Systems</title>
+      <link>https://davesmith00000.github.io/fppixels/posts/2018-12-28-devlog-2-subsystems/</link>
+      <pubDate>Tue, 01 Jan 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://davesmith00000.github.io/fppixels/posts/2018-12-28-devlog-2-subsystems/</guid>
+      <description>In my first devlog I mentioned the idea of adding sub-systems to Indigo so that I could nicely organise a job system for the game I&amp;rsquo;m working on.
+The sub-systems came together quickly and easily, but the job system is still a work in progress. Since I haven&amp;rsquo;t written for a while though, I thought I&amp;rsquo;d explain what sub-systems are and how they work.
+Quick Example The example above uses two sub-systems:</description>
+    </item>
     
     <item>
       <title>Contravariant Functor Spotting</title>

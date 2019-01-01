@@ -7,8 +7,118 @@
 		<generator>Hugo -- gohugo.io</generator>
 		<language>en-gb</language>
 		<copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
-		<lastBuildDate>Thu, 27 Dec 2018 00:00:00 +0000</lastBuildDate>
+		<lastBuildDate>Tue, 01 Jan 2019 00:00:00 +0000</lastBuildDate>
 		<atom:link href="https://davesmith00000.github.io/fppixels/posts/index.xml" rel="self" type="application/rss+xml" />
+		
+		<item>
+			<title>Devlog 2: Sub-Systems</title>
+			<link>https://davesmith00000.github.io/fppixels/posts/2018-12-28-devlog-2-subsystems/</link>
+			<pubDate>Tue, 01 Jan 2019 00:00:00 +0000</pubDate>
+			
+			<guid>https://davesmith00000.github.io/fppixels/posts/2018-12-28-devlog-2-subsystems/</guid>
+			<description>In my first devlog I mentioned the idea of adding sub-systems to Indigo so that I could nicely organise a job system for the game I&amp;rsquo;m working on.
+The sub-systems came together quickly and easily, but the job system is still a work in progress. Since I haven&amp;rsquo;t written for a while though, I thought I&amp;rsquo;d explain what sub-systems are and how they work.
+Quick Example The example above uses two sub-systems:</description>
+			<content type="html"><![CDATA[
+
+<p>In my first devlog I mentioned the idea of adding sub-systems to Indigo so that I could nicely organise a job system for the game I&rsquo;m working on.</p>
+
+<p>The sub-systems came together quickly and easily, but the job system is still a work in progress. Since I haven&rsquo;t written for a while though, I thought I&rsquo;d explain what sub-systems are and how they work.</p>
+
+<h2 id="quick-example">Quick Example</h2>
+
+<p><img src="/fppixels/images/subsystems-example.gif" alt="img" /></p>
+
+<p>The example above uses two sub-systems:</p>
+
+<ol>
+<li>A simple sub-system to count the total points</li>
+<li>Another called an Automata Farm that handles the animated points that appear when the mouse button is clicked.</li>
+</ol>
+
+<p>I&rsquo;m not going to talk about the Automata Farm now. It existed long before sub-systems and it&rsquo;s been fun converting it to the new cleaner sub-system approach.</p>
+
+<h2 id="what-makes-a-sub-system">What makes a Sub-System?</h2>
+
+<p>Here is the definition of a <code>SubSystem</code>:</p>
+<div class="highlight"><pre class="chroma"><code class="language-scala" data-lang="scala"><span class="k">trait</span> <span class="nc">SubSystem</span> <span class="o">{</span>
+  <span class="k">type</span> <span class="kt">EventType</span>
+
+  <span class="k">val</span> <span class="n">eventFilter</span><span class="k">:</span> <span class="kt">GlobalEvent</span> <span class="o">=&gt;</span> <span class="nc">Option</span><span class="o">[</span><span class="kt">EventType</span><span class="o">]</span>
+
+  <span class="k">def</span> <span class="n">update</span><span class="o">(</span><span class="n">gameTime</span><span class="k">:</span> <span class="kt">GameTime</span><span class="o">)</span><span class="k">:</span> <span class="kt">EventType</span> <span class="o">=&gt;</span> <span class="nc">UpdatedSubSystem</span>
+
+  <span class="k">def</span> <span class="n">render</span><span class="o">(</span><span class="n">gameTime</span><span class="k">:</span> <span class="kt">GameTime</span><span class="o">)</span><span class="k">:</span> <span class="kt">SceneUpdateFragment</span>
+
+  <span class="k">def</span> <span class="n">report</span><span class="k">:</span> <span class="kt">String</span>
+<span class="o">}</span></code></pre></div>
+<p>The interesting thing about sub-systems is that the definition above is really just a cut down version of the functions that make up the entire game engine.</p>
+
+<p>The main game loop essentially has three stages:</p>
+
+<ol>
+<li>Update the models</li>
+<li>Update the view models</li>
+<li>Present the scene</li>
+</ol>
+
+<p>A sub-system just does 1 and 3, since 2 felt like overkill for what are supposed to be small processes.</p>
+
+<p>During update, the game loop propagates each event from an immutable list of &ldquo;stuff that happened in the previous frame&rdquo; to all of the sub-systems and the user defined game functions. Each of those functions results in an <code>Update&lt;Thing&gt;</code> type such as the <code>UpdateSubSystem</code> above. <code>UpdateSubSystem</code> includes the next version of the sub-system (i.e. state that progresses over time) and a list of output events (consequences) that occurred as part of the update process. The state is persisted and the events are queued up ready to be processed on the next frame.</p>
+
+<p>Render (or present - terminology is a bit inconsistent at the moment) is then called everywhere which eventually results in a list of <code>SceneUpdateFragment</code>s. Since the fragments are Monoids they are simply folded together to create the final scene to be presented.</p>
+
+<p>Here is our points tracker (the top left bit of the screenshot):</p>
+<div class="highlight"><pre class="chroma"><code class="language-scala" data-lang="scala"><span class="k">final</span> <span class="k">case</span> <span class="k">class</span> <span class="nc">PointsTrackerSubSystem</span><span class="o">(</span><span class="n">points</span><span class="k">:</span> <span class="kt">Int</span><span class="o">,</span> <span class="n">fontKey</span><span class="k">:</span> <span class="kt">FontKey</span><span class="o">)</span> <span class="k">extends</span> <span class="nc">SubSystem</span> <span class="o">{</span>
+  <span class="k">type</span> <span class="kt">EventType</span> <span class="o">=</span> <span class="nc">PointsTrackerEvent</span>
+
+  <span class="k">val</span> <span class="n">eventFilter</span><span class="k">:</span> <span class="kt">GlobalEvent</span> <span class="o">=&gt;</span> <span class="nc">Option</span><span class="o">[</span><span class="kt">PointsTrackerEvent</span><span class="o">]</span> <span class="k">=</span> <span class="o">{</span>
+    <span class="k">case</span> <span class="n">e</span><span class="k">:</span> <span class="kt">PointsTrackerEvent</span> <span class="o">=&gt;</span> <span class="nc">Option</span><span class="o">(</span><span class="n">e</span><span class="o">)</span>
+    <span class="k">case</span> <span class="k">_</span>                     <span class="k">=&gt;</span> <span class="nc">None</span>
+  <span class="o">}</span>
+
+  <span class="k">def</span> <span class="n">update</span><span class="o">(</span><span class="n">gameTime</span><span class="k">:</span> <span class="kt">GameTime</span><span class="o">)</span><span class="k">:</span> <span class="kt">PointsTrackerEvent</span> <span class="o">=&gt;</span> <span class="nc">UpdatedSubSystem</span> <span class="k">=</span> <span class="o">{</span>
+    <span class="k">case</span> <span class="nc">PointsTrackerEvent</span><span class="o">.</span><span class="nc">Add</span><span class="o">(</span><span class="n">pts</span><span class="o">)</span> <span class="k">=&gt;</span>
+      <span class="nc">UpdatedSubSystem</span><span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="n">copy</span><span class="o">(</span><span class="n">points</span> <span class="k">=</span> <span class="n">points</span> <span class="o">+</span> <span class="n">pts</span><span class="o">))</span>
+  <span class="o">}</span>
+
+  <span class="k">def</span> <span class="n">render</span><span class="o">(</span><span class="n">gameTime</span><span class="k">:</span> <span class="kt">GameTime</span><span class="o">)</span><span class="k">:</span> <span class="kt">SceneUpdateFragment</span> <span class="o">=</span>
+    <span class="nc">SceneUpdateFragment</span><span class="o">.</span><span class="n">empty</span>
+      <span class="o">.</span><span class="n">addGameLayerNodes</span><span class="o">(</span><span class="nc">Text</span><span class="o">(</span><span class="n">report</span><span class="o">,</span> <span class="mi">10</span><span class="o">,</span> <span class="mi">10</span><span class="o">,</span> <span class="mi">1</span><span class="o">,</span> <span class="n">fontKey</span><span class="o">))</span>
+
+  <span class="k">def</span> <span class="n">report</span><span class="k">:</span> <span class="kt">String</span> <span class="o">=</span>
+    <span class="s">s&#34;&#34;&#34;Points: </span><span class="si">$points</span><span class="s">&#34;&#34;&#34;</span>
+<span class="o">}</span>
+
+<span class="k">sealed</span> <span class="k">trait</span> <span class="nc">PointsTrackerEvent</span> <span class="k">extends</span> <span class="nc">GlobalEvent</span> <span class="k">with</span> <span class="nc">Product</span> <span class="k">with</span> <span class="nc">Serializable</span>
+<span class="k">object</span> <span class="nc">PointsTrackerEvent</span> <span class="o">{</span>
+  <span class="k">final</span> <span class="k">case</span> <span class="k">class</span> <span class="nc">Add</span><span class="o">(</span><span class="n">points</span><span class="k">:</span> <span class="kt">Int</span><span class="o">)</span> <span class="k">extends</span> <span class="nc">PointsTrackerEvent</span>
+<span class="o">}</span></code></pre></div>
+<p>In this example the event type didn&rsquo;t need to be an ADT, but I wanted to show the intended usage.</p>
+
+<h2 id="integrating-a-sub-system">Integrating a Sub-System</h2>
+
+<p>A big part of point of sub-systems is that you set them up, send them events, and let the engine take care of the boring details. The other side is there sub systems are for modelling things that are fairly loosely coupled, components you can write a test in isolation and that you don&rsquo;t want cluttering up your game code. As such, the integration code is very light.</p>
+
+<p>The first thing we have to do is register our sub-systems, like this:</p>
+<div class="highlight"><pre class="chroma"><code class="language-scala" data-lang="scala"><span class="k">val</span> <span class="n">subSystems</span><span class="k">:</span> <span class="kt">Set</span><span class="o">[</span><span class="kt">SubSystem</span><span class="o">]</span> <span class="k">=</span>
+  <span class="nc">Set</span><span class="o">(</span><span class="nc">PointsTrackerSubSystem</span><span class="o">(</span><span class="mi">0</span><span class="o">,</span> <span class="n">fontKey</span><span class="o">))</span></code></pre></div>
+<p>Everything has to be updated, but Indigo takes care of that. The only thing we must do is poke them with relevant events. In this case we send off an &ldquo;Add 10 points&rdquo; event.</p>
+
+<p>Note that the &ldquo;model&rdquo; of this game is of type <code>Unit</code> because there is no model - don&rsquo;t worry about it. Each sub-system <em>is</em> it&rsquo;s own model and we&rsquo;re only using sub-systems in this example.</p>
+<div class="highlight"><pre class="chroma"><code class="language-scala" data-lang="scala"><span class="k">def</span> <span class="n">update</span><span class="o">(</span><span class="n">gameTime</span><span class="k">:</span> <span class="kt">GameTime</span><span class="o">,</span> <span class="n">model</span><span class="k">:</span> <span class="kt">Unit</span><span class="o">)</span><span class="k">:</span> <span class="kt">GlobalEvent</span> <span class="o">=&gt;</span> <span class="nc">UpdatedModel</span><span class="o">[</span><span class="kt">Unit</span><span class="o">]</span> <span class="k">=</span> <span class="o">{</span>
+  <span class="k">case</span> <span class="nc">MouseEvent</span><span class="o">.</span><span class="nc">Click</span><span class="o">(</span><span class="k">_</span><span class="o">,</span> <span class="k">_</span><span class="o">)</span> <span class="k">=&gt;</span>
+    <span class="nc">UpdatedModel</span><span class="o">(()).</span><span class="n">addGlobalEvents</span><span class="o">(</span><span class="nc">PointsTrackerEvent</span><span class="o">.</span><span class="nc">Add</span><span class="o">(</span><span class="mi">10</span><span class="o">))</span>
+
+  <span class="k">case</span> <span class="k">_</span> <span class="k">=&gt;</span>
+    <span class="nc">UpdatedModel</span><span class="o">(())</span>
+<span class="o">}</span></code></pre></div>
+<p>Likewise, rendering is taken care of because each sub-system is rendered separately in the background and our game only uses sub-systems to do all the presenting.</p>
+<div class="highlight"><pre class="chroma"><code class="language-scala" data-lang="scala"><span class="k">def</span> <span class="n">present</span><span class="o">(</span><span class="n">gameTime</span><span class="k">:</span> <span class="kt">GameTime</span><span class="o">,</span> <span class="n">model</span><span class="k">:</span> <span class="kt">Unit</span><span class="o">,</span> <span class="n">viewModel</span><span class="k">:</span> <span class="kt">Unit</span><span class="o">,</span> <span class="n">frameInputEvents</span><span class="k">:</span> <span class="kt">FrameInputEvents</span><span class="o">)</span><span class="k">:</span> <span class="kt">SceneUpdateFragment</span> <span class="o">=</span>
+    <span class="n">noRender</span> </code></pre></div>
+<p>Nice and easy.</p>
+]]></content>
+		</item>
 		
 		<item>
 			<title>Contravariant Functor Spotting</title>
