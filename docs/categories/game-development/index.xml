@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Game Development on FP Pixels</title>
+    <link>https://davesmith00000.github.io/fppixels/categories/game-development/</link>
+    <description>Recent content in Game Development on FP Pixels</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-gb</language>
+    <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
+    <lastBuildDate>Fri, 30 Nov 2018 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://davesmith00000.github.io/fppixels/categories/game-development/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Devlog: Not quite starting from zero.</title>
+      <link>https://davesmith00000.github.io/fppixels/posts/00004-devlog-starting-out/</link>
+      <pubDate>Fri, 30 Nov 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://davesmith00000.github.io/fppixels/posts/00004-devlog-starting-out/</guid>
+      <description>I’ve had an idea for a game - as yet untitled - rattling around in my head for quite a while now, but attempts to actually build it have been a bit fruitless so far.
+At first, that was because I couldn’t find a game engine I liked*. Later it was because, out of sheer frustration at the state of game dev tooling, I stopped to write my own game engine (Indigo).</description>
+    </item>
+    
+    <item>
+      <title>A Thundering Herd of Naked Dudes!</title>
+      <link>https://davesmith00000.github.io/fppixels/posts/00003-thundering-herd/</link>
+      <pubDate>Tue, 20 Nov 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://davesmith00000.github.io/fppixels/posts/00003-thundering-herd/</guid>
+      <description>This is a thundering herd of 5000 naked dudes.**
+They are here to complain about the fact that Indigo allocates far too often, causing garbage collections that hurt performance in busy scenes. Unfortunately, while the concerns of the amassed pixelated naturists have been heard and acknowledged &amp;hellip;they&amp;rsquo;ll just have to wait.
+Performance is good enough for now, my time is limited, and I&amp;rsquo;m still collecting data. That said! I&amp;rsquo;d like to offer an example what direction the data I&amp;rsquo;ve collected so far is pointing in:</description>
+    </item>
+    
+    <item>
+      <title>Snake in Scala.js</title>
+      <link>https://davesmith00000.github.io/fppixels/posts/00002-snake-scalajs/</link>
+      <pubDate>Sun, 18 Nov 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://davesmith00000.github.io/fppixels/posts/00002-snake-scalajs/</guid>
+      <description>This was a milestone week.
+For the first time in more than a decade, this ex-Flash developer has actually finished making a game.
+Admittedly the game is just a Snake clone, nothing fancy, but it is built on top of a custom engine I&amp;rsquo;m calling Indigo. Limited as Snake&amp;rsquo;s development needs were, getting from &amp;ldquo;it kinda works!&amp;rdquo; to &amp;ldquo;it&amp;rsquo;s kinda finished!&amp;rdquo; has helped drive out a surprising number of engine requirements.</description>
+    </item>
+    
+  </channel>
+</rss>

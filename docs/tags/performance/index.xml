@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>performance on FP Pixels</title>
+    <link>https://davesmith00000.github.io/fppixels/tags/performance/</link>
+    <description>Recent content in performance on FP Pixels</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-gb</language>
+    <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
+    <lastBuildDate>Tue, 20 Nov 2018 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://davesmith00000.github.io/fppixels/tags/performance/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>A Thundering Herd of Naked Dudes!</title>
+      <link>https://davesmith00000.github.io/fppixels/posts/00003-thundering-herd/</link>
+      <pubDate>Tue, 20 Nov 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://davesmith00000.github.io/fppixels/posts/00003-thundering-herd/</guid>
+      <description>This is a thundering herd of 5000 naked dudes.**
+They are here to complain about the fact that Indigo allocates far too often, causing garbage collections that hurt performance in busy scenes. Unfortunately, while the concerns of the amassed pixelated naturists have been heard and acknowledged &amp;hellip;they&amp;rsquo;ll just have to wait.
+Performance is good enough for now, my time is limited, and I&amp;rsquo;m still collecting data. That said! I&amp;rsquo;d like to offer an example what direction the data I&amp;rsquo;ve collected so far is pointing in:</description>
+    </item>
+    
+  </channel>
+</rss>

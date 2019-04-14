@@ -7,9 +7,64 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-gb</language>
     <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
+    <lastBuildDate>Tue, 01 Jan 2019 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://davesmith00000.github.io/fppixels/tags/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>devlog</title>
+      <link>https://davesmith00000.github.io/fppixels/tags/devlog/</link>
+      <pubDate>Tue, 01 Jan 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://davesmith00000.github.io/fppixels/tags/devlog/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>indigo</title>
+      <link>https://davesmith00000.github.io/fppixels/tags/indigo/</link>
+      <pubDate>Tue, 01 Jan 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://davesmith00000.github.io/fppixels/tags/indigo/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>scala</title>
+      <link>https://davesmith00000.github.io/fppixels/tags/scala/</link>
+      <pubDate>Tue, 01 Jan 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://davesmith00000.github.io/fppixels/tags/scala/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>performance</title>
+      <link>https://davesmith00000.github.io/fppixels/tags/performance/</link>
+      <pubDate>Tue, 20 Nov 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://davesmith00000.github.io/fppixels/tags/performance/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>scala.js</title>
+      <link>https://davesmith00000.github.io/fppixels/tags/scala.js/</link>
+      <pubDate>Sun, 18 Nov 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://davesmith00000.github.io/fppixels/tags/scala.js/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>combinators</title>
+      <link>https://davesmith00000.github.io/fppixels/tags/combinators/</link>
+      <pubDate>Fri, 27 Oct 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://davesmith00000.github.io/fppixels/tags/combinators/</guid>
+      <description></description>
+    </item>
     
   </channel>
 </rss>

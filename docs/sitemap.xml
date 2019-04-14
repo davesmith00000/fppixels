@@ -3,52 +3,30 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>https://davesmith00000.github.io/fppixels/posts/2018-12-28-devlog-2-subsystems/</loc>
+    <loc>https://davesmith00000.github.io/fppixels/categories/</loc>
     <lastmod>2019-01-01T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://davesmith00000.github.io/fppixels/posts/2018-12-27-contravariant-functor-spotting/</loc>
-    <lastmod>2018-12-27T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://davesmith00000.github.io/fppixels/posts/2018-12-23-games-without-effects/</loc>
-    <lastmod>2018-12-23T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://davesmith00000.github.io/fppixels/posts/2018-12-16-big-beautiful-packages/</loc>
-    <lastmod>2018-12-16T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://davesmith00000.github.io/fppixels/posts/2018-11-30-devlog-1/</loc>
-    <lastmod>2018-11-30T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://davesmith00000.github.io/fppixels/posts/2018-11-20-thundering-herd/</loc>
-    <lastmod>2018-11-20T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://davesmith00000.github.io/fppixels/posts/2018-11-18-snake-scalajs/</loc>
-    <lastmod>2018-11-18T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://davesmith00000.github.io/fppixels/posts/2017-10-27-combining-s-and-k/</loc>
-    <lastmod>2017-10-27T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://davesmith00000.github.io/fppixels/</loc>
     <priority>0</priority>
   </url>
   
   <url>
+    <loc>https://davesmith00000.github.io/fppixels/posts/00008-devlog-subsystems/</loc>
+    <lastmod>2019-01-01T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://davesmith00000.github.io/fppixels/</loc>
+    <lastmod>2019-01-01T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://davesmith00000.github.io/fppixels/categories/game-devlog/</loc>
+    <lastmod>2019-01-01T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://davesmith00000.github.io/fppixels/categories/indigo-game-engine-design/</loc>
     <lastmod>2019-01-01T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
@@ -61,6 +39,96 @@
   
   <url>
     <loc>https://davesmith00000.github.io/fppixels/tags/</loc>
+    <lastmod>2019-01-01T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://davesmith00000.github.io/fppixels/tags/devlog/</loc>
+    <lastmod>2019-01-01T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://davesmith00000.github.io/fppixels/tags/indigo/</loc>
+    <lastmod>2019-01-01T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://davesmith00000.github.io/fppixels/tags/scala/</loc>
+    <lastmod>2019-01-01T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://davesmith00000.github.io/fppixels/posts/00007-contravariant-functor-spotting/</loc>
+    <lastmod>2018-12-27T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://davesmith00000.github.io/fppixels/categories/tutorial/</loc>
+    <lastmod>2018-12-27T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://davesmith00000.github.io/fppixels/posts/00006-games-without-effects/</loc>
+    <lastmod>2018-12-23T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://davesmith00000.github.io/fppixels/posts/00005-big-beautiful-packages/</loc>
+    <lastmod>2018-12-16T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://davesmith00000.github.io/fppixels/posts/00004-devlog-starting-out/</loc>
+    <lastmod>2018-11-30T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://davesmith00000.github.io/fppixels/categories/game-development/</loc>
+    <lastmod>2018-11-30T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://davesmith00000.github.io/fppixels/posts/00003-thundering-herd/</loc>
+    <lastmod>2018-11-20T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://davesmith00000.github.io/fppixels/tags/performance/</loc>
+    <lastmod>2018-11-20T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://davesmith00000.github.io/fppixels/posts/00002-snake-scalajs/</loc>
+    <lastmod>2018-11-18T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://davesmith00000.github.io/fppixels/tags/scala.js/</loc>
+    <lastmod>2018-11-18T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://davesmith00000.github.io/fppixels/posts/00001-combining-s-and-k/</loc>
+    <lastmod>2017-10-27T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://davesmith00000.github.io/fppixels/tags/combinators/</loc>
+    <lastmod>2017-10-27T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://davesmith00000.github.io/fppixels/categories/reference/</loc>
+    <lastmod>2017-10-27T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   

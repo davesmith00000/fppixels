@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Categories on FP Pixels</title>
+    <link>https://davesmith00000.github.io/fppixels/categories/</link>
+    <description>Recent content in Categories on FP Pixels</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-gb</language>
+    <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
+    <lastBuildDate>Tue, 01 Jan 2019 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://davesmith00000.github.io/fppixels/categories/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Game Devlog</title>
+      <link>https://davesmith00000.github.io/fppixels/categories/game-devlog/</link>
+      <pubDate>Tue, 01 Jan 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://davesmith00000.github.io/fppixels/categories/game-devlog/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Indigo Game Engine Design</title>
+      <link>https://davesmith00000.github.io/fppixels/categories/indigo-game-engine-design/</link>
+      <pubDate>Tue, 01 Jan 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://davesmith00000.github.io/fppixels/categories/indigo-game-engine-design/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Tutorial</title>
+      <link>https://davesmith00000.github.io/fppixels/categories/tutorial/</link>
+      <pubDate>Thu, 27 Dec 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://davesmith00000.github.io/fppixels/categories/tutorial/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Game Development</title>
+      <link>https://davesmith00000.github.io/fppixels/categories/game-development/</link>
+      <pubDate>Fri, 30 Nov 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://davesmith00000.github.io/fppixels/categories/game-development/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>reference</title>
+      <link>https://davesmith00000.github.io/fppixels/categories/reference/</link>
+      <pubDate>Fri, 27 Oct 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://davesmith00000.github.io/fppixels/categories/reference/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>

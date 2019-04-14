@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>scala.js on FP Pixels</title>
+    <link>https://davesmith00000.github.io/fppixels/tags/scala.js/</link>
+    <description>Recent content in scala.js on FP Pixels</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-gb</language>
+    <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
+    <lastBuildDate>Sun, 18 Nov 2018 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://davesmith00000.github.io/fppixels/tags/scala.js/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Snake in Scala.js</title>
+      <link>https://davesmith00000.github.io/fppixels/posts/00002-snake-scalajs/</link>
+      <pubDate>Sun, 18 Nov 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://davesmith00000.github.io/fppixels/posts/00002-snake-scalajs/</guid>
+      <description>This was a milestone week.
+For the first time in more than a decade, this ex-Flash developer has actually finished making a game.
+Admittedly the game is just a Snake clone, nothing fancy, but it is built on top of a custom engine I&amp;rsquo;m calling Indigo. Limited as Snake&amp;rsquo;s development needs were, getting from &amp;ldquo;it kinda works!&amp;rdquo; to &amp;ldquo;it&amp;rsquo;s kinda finished!&amp;rdquo; has helped drive out a surprising number of engine requirements.</description>
+    </item>
+    
+  </channel>
+</rss>

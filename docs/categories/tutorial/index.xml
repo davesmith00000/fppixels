@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Tutorial on FP Pixels</title>
+    <link>https://davesmith00000.github.io/fppixels/categories/tutorial/</link>
+    <description>Recent content in Tutorial on FP Pixels</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-gb</language>
+    <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
+    <lastBuildDate>Thu, 27 Dec 2018 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://davesmith00000.github.io/fppixels/categories/tutorial/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Contravariant Functor Spotting</title>
+      <link>https://davesmith00000.github.io/fppixels/posts/00007-contravariant-functor-spotting/</link>
+      <pubDate>Thu, 27 Dec 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://davesmith00000.github.io/fppixels/posts/00007-contravariant-functor-spotting/</guid>
+      <description>There are lots of explanations out there on the interwebs about contravariant functors, and perhaps I’m just a bit dim in some regards, but it took me quite a while to get a handle on them.
+Start with Why. The main issue I have when grappling with some new FP concept is &amp;ldquo;why&amp;rdquo;. For what do I need this? Most tutorials and discussions satisfy themselves with either a terse showing of this slightly weird function signature:</description>
+    </item>
+    
+    <item>
+      <title>Big Beautiful Packages</title>
+      <link>https://davesmith00000.github.io/fppixels/posts/00005-big-beautiful-packages/</link>
+      <pubDate>Sun, 16 Dec 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://davesmith00000.github.io/fppixels/posts/00005-big-beautiful-packages/</guid>
+      <description>TL;DR: You can use package objects to alias types making your library&amp;rsquo;s imports easier to work with, aid encapsulation, and act as an interface. Big popular libraries do this, I just hadn’t realised the benefits until recently.
+Authors note: This post has been sitting in draft for a while. At the time I originally wrote it, I was unreasonably excited about this little trick, but you may find this underwhelming&amp;hellip;</description>
+    </item>
+    
+  </channel>
+</rss>

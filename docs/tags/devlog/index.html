@@ -4,9 +4,9 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
   
-  <title>Posts</title>
-  <meta property="og:title" content="Posts" />
-  <meta name="twitter:title" content="Posts" />
+  <title>devlog</title>
+  <meta property="og:title" content="devlog" />
+  <meta name="twitter:title" content="devlog" />
   
 
   
@@ -17,7 +17,7 @@
 
   <meta name="author" content="Dave Smith"/>
   <meta property="og:site_name" content="FP Pixels" />
-  <meta property="og:url" content="https://davesmith00000.github.io/fppixels/posts/" />
+  <meta property="og:url" content="https://davesmith00000.github.io/fppixels/tags/devlog/" />
 
   
   <meta name="twitter:card" content="summary" />
@@ -54,7 +54,7 @@
   </header>
   <main id="main" class="l-main">
 
-<h2 class="c-title p-tag-title">Posts</h2>
+<h2 class="c-title p-tag-title">devlog</h2>
 
 
 <article class="c-article p-list-article">
@@ -82,73 +82,6 @@ Quick Example The example above uses two sub-systems:
 
 <article class="c-article p-list-article">
   <header>
-    <h2 class="c-title c-article__title"><a href="https://davesmith00000.github.io/fppixels/posts/00007-contravariant-functor-spotting/">Contravariant Functor Spotting</a></h2>
-    <p class="c-article__meta">
-      Posted on
-      <time datetime="2018-12-27T00:00:00Z">
-        Dec 27, 2018
-      </time>
-    </p>
-  </header>
-  <div class="c-article__summary">
-    There are lots of explanations out there on the interwebs about contravariant functors, and perhaps I’m just a bit dim in some regards, but it took me quite a while to get a handle on them.
-Start with Why. The main issue I have when grappling with some new FP concept is &ldquo;why&rdquo;. For what do I need this? Most tutorials and discussions satisfy themselves with either a terse showing of this slightly weird function signature:
-  </div>
-  
-  <a href="https://davesmith00000.github.io/fppixels/posts/00007-contravariant-functor-spotting/" class="c-article__btn p-list-article__btn">Read more</a>
-  
-</article>
-
-
-
-
-<article class="c-article p-list-article">
-  <header>
-    <h2 class="c-title c-article__title"><a href="https://davesmith00000.github.io/fppixels/posts/00006-games-without-effects/">Building Games Without Effects</a></h2>
-    <p class="c-article__meta">
-      Posted on
-      <time datetime="2018-12-23T00:00:00Z">
-        Dec 23, 2018
-      </time>
-    </p>
-  </header>
-  <div class="c-article__summary">
-    TL;DR: Indigo does not [generally] have any Monads or Functors exposed on it&rsquo;s APIs. This is intentional since you&rsquo;re not allowed to error and everything is synchronous.
-Monads that power the internet As I suspect is the case with the majority of Scala developers, my day job is largely about server side programming, building microservices and the like.
-In the context of server-side programming you simply cannot move for Monads.
-  </div>
-  
-  <a href="https://davesmith00000.github.io/fppixels/posts/00006-games-without-effects/" class="c-article__btn p-list-article__btn">Read more</a>
-  
-</article>
-
-
-
-
-<article class="c-article p-list-article">
-  <header>
-    <h2 class="c-title c-article__title"><a href="https://davesmith00000.github.io/fppixels/posts/00005-big-beautiful-packages/">Big Beautiful Packages</a></h2>
-    <p class="c-article__meta">
-      Posted on
-      <time datetime="2018-12-16T00:00:00Z">
-        Dec 16, 2018
-      </time>
-    </p>
-  </header>
-  <div class="c-article__summary">
-    TL;DR: You can use package objects to alias types making your library&rsquo;s imports easier to work with, aid encapsulation, and act as an interface. Big popular libraries do this, I just hadn’t realised the benefits until recently.
-Authors note: This post has been sitting in draft for a while. At the time I originally wrote it, I was unreasonably excited about this little trick, but you may find this underwhelming&hellip;
-  </div>
-  
-  <a href="https://davesmith00000.github.io/fppixels/posts/00005-big-beautiful-packages/" class="c-article__btn p-list-article__btn">Read more</a>
-  
-</article>
-
-
-
-
-<article class="c-article p-list-article">
-  <header>
     <h2 class="c-title c-article__title"><a href="https://davesmith00000.github.io/fppixels/posts/00004-devlog-starting-out/">Devlog: Not quite starting from zero.</a></h2>
     <p class="c-article__meta">
       Posted on
@@ -163,74 +96,6 @@ At first, that was because I couldn’t find a game engine I liked*. Later it wa
   </div>
   
   <a href="https://davesmith00000.github.io/fppixels/posts/00004-devlog-starting-out/" class="c-article__btn p-list-article__btn">Read more</a>
-  
-</article>
-
-
-
-
-<article class="c-article p-list-article">
-  <header>
-    <h2 class="c-title c-article__title"><a href="https://davesmith00000.github.io/fppixels/posts/00003-thundering-herd/">A Thundering Herd of Naked Dudes!</a></h2>
-    <p class="c-article__meta">
-      Posted on
-      <time datetime="2018-11-20T00:00:00Z">
-        Nov 20, 2018
-      </time>
-    </p>
-  </header>
-  <div class="c-article__summary">
-    This is a thundering herd of 5000 naked dudes.**
-They are here to complain about the fact that Indigo allocates far too often, causing garbage collections that hurt performance in busy scenes. Unfortunately, while the concerns of the amassed pixelated naturists have been heard and acknowledged &hellip;they&rsquo;ll just have to wait.
-Performance is good enough for now, my time is limited, and I&rsquo;m still collecting data. That said! I&rsquo;d like to offer an example what direction the data I&rsquo;ve collected so far is pointing in:
-  </div>
-  
-  <a href="https://davesmith00000.github.io/fppixels/posts/00003-thundering-herd/" class="c-article__btn p-list-article__btn">Read more</a>
-  
-</article>
-
-
-
-
-<article class="c-article p-list-article">
-  <header>
-    <h2 class="c-title c-article__title"><a href="https://davesmith00000.github.io/fppixels/posts/00002-snake-scalajs/">Snake in Scala.js</a></h2>
-    <p class="c-article__meta">
-      Posted on
-      <time datetime="2018-11-18T00:00:00Z">
-        Nov 18, 2018
-      </time>
-    </p>
-  </header>
-  <div class="c-article__summary">
-    This was a milestone week.
-For the first time in more than a decade, this ex-Flash developer has actually finished making a game.
-Admittedly the game is just a Snake clone, nothing fancy, but it is built on top of a custom engine I&rsquo;m calling Indigo. Limited as Snake&rsquo;s development needs were, getting from &ldquo;it kinda works!&rdquo; to &ldquo;it&rsquo;s kinda finished!&rdquo; has helped drive out a surprising number of engine requirements.
-  </div>
-  
-  <a href="https://davesmith00000.github.io/fppixels/posts/00002-snake-scalajs/" class="c-article__btn p-list-article__btn">Read more</a>
-  
-</article>
-
-
-
-
-<article class="c-article p-list-article">
-  <header>
-    <h2 class="c-title c-article__title"><a href="https://davesmith00000.github.io/fppixels/posts/00001-combining-s-and-k/">Combining S and K</a></h2>
-    <p class="c-article__meta">
-      Posted on
-      <time datetime="2017-10-27T00:00:00Z">
-        Oct 27, 2017
-      </time>
-    </p>
-  </header>
-  <div class="c-article__summary">
-    While attempting to follow an Agda tutorial in Scala (CS410 2017 Lecture 2 (more Programs and Proofs, introducing &ldquo;with&rdquo;) - Conor McBride), some understanding of combinators S and K finally began to dawn.
-“It is perhaps astonishing that S and K can be composed to produce combinators that are extensionally equal to any lambda term, and therefore, by Church&rsquo;s thesis, to any computable function whatsoever” ~ Combinatory Logic, Wikipedia 27/10/17
-  </div>
-  
-  <a href="https://davesmith00000.github.io/fppixels/posts/00001-combining-s-and-k/" class="c-article__btn p-list-article__btn">Read more</a>
   
 </article>
 

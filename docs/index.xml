@@ -13,11 +13,11 @@
     
     
     <item>
-      <title>Devlog 2: Sub-Systems</title>
-      <link>https://davesmith00000.github.io/fppixels/posts/2018-12-28-devlog-2-subsystems/</link>
+      <title>Devlog: Sub-Systems</title>
+      <link>https://davesmith00000.github.io/fppixels/posts/00008-devlog-subsystems/</link>
       <pubDate>Tue, 01 Jan 2019 00:00:00 +0000</pubDate>
       
-      <guid>https://davesmith00000.github.io/fppixels/posts/2018-12-28-devlog-2-subsystems/</guid>
+      <guid>https://davesmith00000.github.io/fppixels/posts/00008-devlog-subsystems/</guid>
       <description>In my first devlog I mentioned the idea of adding sub-systems to Indigo so that I could nicely organise a job system for the game I&amp;rsquo;m working on.
 The sub-systems came together quickly and easily, but the job system is still a work in progress. Since I haven&amp;rsquo;t written for a while though, I thought I&amp;rsquo;d explain what sub-systems are and how they work.
 Quick Example The example above uses two sub-systems:</description>
@@ -25,20 +25,20 @@ Quick Example The example above uses two sub-systems:</description>
     
     <item>
       <title>Contravariant Functor Spotting</title>
-      <link>https://davesmith00000.github.io/fppixels/posts/2018-12-27-contravariant-functor-spotting/</link>
+      <link>https://davesmith00000.github.io/fppixels/posts/00007-contravariant-functor-spotting/</link>
       <pubDate>Thu, 27 Dec 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://davesmith00000.github.io/fppixels/posts/2018-12-27-contravariant-functor-spotting/</guid>
+      <guid>https://davesmith00000.github.io/fppixels/posts/00007-contravariant-functor-spotting/</guid>
       <description>There are lots of explanations out there on the interwebs about contravariant functors, and perhaps I’m just a bit dim in some regards, but it took me quite a while to get a handle on them.
 Start with Why. The main issue I have when grappling with some new FP concept is &amp;ldquo;why&amp;rdquo;. For what do I need this? Most tutorials and discussions satisfy themselves with either a terse showing of this slightly weird function signature:</description>
     </item>
     
     <item>
       <title>Building Games Without Effects</title>
-      <link>https://davesmith00000.github.io/fppixels/posts/2018-12-23-games-without-effects/</link>
+      <link>https://davesmith00000.github.io/fppixels/posts/00006-games-without-effects/</link>
       <pubDate>Sun, 23 Dec 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://davesmith00000.github.io/fppixels/posts/2018-12-23-games-without-effects/</guid>
+      <guid>https://davesmith00000.github.io/fppixels/posts/00006-games-without-effects/</guid>
       <description>TL;DR: Indigo does not [generally] have any Monads or Functors exposed on it&amp;rsquo;s APIs. This is intentional since you&amp;rsquo;re not allowed to error and everything is synchronous.
 Monads that power the internet As I suspect is the case with the majority of Scala developers, my day job is largely about server side programming, building microservices and the like.
 In the context of server-side programming you simply cannot move for Monads.</description>
@@ -46,30 +46,30 @@ In the context of server-side programming you simply cannot move for Monads.</de
     
     <item>
       <title>Big Beautiful Packages</title>
-      <link>https://davesmith00000.github.io/fppixels/posts/2018-12-16-big-beautiful-packages/</link>
+      <link>https://davesmith00000.github.io/fppixels/posts/00005-big-beautiful-packages/</link>
       <pubDate>Sun, 16 Dec 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://davesmith00000.github.io/fppixels/posts/2018-12-16-big-beautiful-packages/</guid>
+      <guid>https://davesmith00000.github.io/fppixels/posts/00005-big-beautiful-packages/</guid>
       <description>TL;DR: You can use package objects to alias types making your library&amp;rsquo;s imports easier to work with, aid encapsulation, and act as an interface. Big popular libraries do this, I just hadn’t realised the benefits until recently.
 Authors note: This post has been sitting in draft for a while. At the time I originally wrote it, I was unreasonably excited about this little trick, but you may find this underwhelming&amp;hellip;</description>
     </item>
     
     <item>
-      <title>Devlog 1: Not quite starting from zero.</title>
-      <link>https://davesmith00000.github.io/fppixels/posts/2018-11-30-devlog-1/</link>
+      <title>Devlog: Not quite starting from zero.</title>
+      <link>https://davesmith00000.github.io/fppixels/posts/00004-devlog-starting-out/</link>
       <pubDate>Fri, 30 Nov 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://davesmith00000.github.io/fppixels/posts/2018-11-30-devlog-1/</guid>
+      <guid>https://davesmith00000.github.io/fppixels/posts/00004-devlog-starting-out/</guid>
       <description>I’ve had an idea for a game - as yet untitled - rattling around in my head for quite a while now, but attempts to actually build it have been a bit fruitless so far.
 At first, that was because I couldn’t find a game engine I liked*. Later it was because, out of sheer frustration at the state of game dev tooling, I stopped to write my own game engine (Indigo).</description>
     </item>
     
     <item>
       <title>A Thundering Herd of Naked Dudes!</title>
-      <link>https://davesmith00000.github.io/fppixels/posts/2018-11-20-thundering-herd/</link>
+      <link>https://davesmith00000.github.io/fppixels/posts/00003-thundering-herd/</link>
       <pubDate>Tue, 20 Nov 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://davesmith00000.github.io/fppixels/posts/2018-11-20-thundering-herd/</guid>
+      <guid>https://davesmith00000.github.io/fppixels/posts/00003-thundering-herd/</guid>
       <description>This is a thundering herd of 5000 naked dudes.**
 They are here to complain about the fact that Indigo allocates far too often, causing garbage collections that hurt performance in busy scenes. Unfortunately, while the concerns of the amassed pixelated naturists have been heard and acknowledged &amp;hellip;they&amp;rsquo;ll just have to wait.
 Performance is good enough for now, my time is limited, and I&amp;rsquo;m still collecting data. That said! I&amp;rsquo;d like to offer an example what direction the data I&amp;rsquo;ve collected so far is pointing in:</description>
@@ -77,10 +77,10 @@ Performance is good enough for now, my time is limited, and I&amp;rsquo;m still 
     
     <item>
       <title>Snake in Scala.js</title>
-      <link>https://davesmith00000.github.io/fppixels/posts/2018-11-18-snake-scalajs/</link>
+      <link>https://davesmith00000.github.io/fppixels/posts/00002-snake-scalajs/</link>
       <pubDate>Sun, 18 Nov 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://davesmith00000.github.io/fppixels/posts/2018-11-18-snake-scalajs/</guid>
+      <guid>https://davesmith00000.github.io/fppixels/posts/00002-snake-scalajs/</guid>
       <description>This was a milestone week.
 For the first time in more than a decade, this ex-Flash developer has actually finished making a game.
 Admittedly the game is just a Snake clone, nothing fancy, but it is built on top of a custom engine I&amp;rsquo;m calling Indigo. Limited as Snake&amp;rsquo;s development needs were, getting from &amp;ldquo;it kinda works!&amp;rdquo; to &amp;ldquo;it&amp;rsquo;s kinda finished!&amp;rdquo; has helped drive out a surprising number of engine requirements.</description>
@@ -88,10 +88,10 @@ Admittedly the game is just a Snake clone, nothing fancy, but it is built on top
     
     <item>
       <title>Combining S and K</title>
-      <link>https://davesmith00000.github.io/fppixels/posts/2017-10-27-combining-s-and-k/</link>
+      <link>https://davesmith00000.github.io/fppixels/posts/00001-combining-s-and-k/</link>
       <pubDate>Fri, 27 Oct 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://davesmith00000.github.io/fppixels/posts/2017-10-27-combining-s-and-k/</guid>
+      <guid>https://davesmith00000.github.io/fppixels/posts/00001-combining-s-and-k/</guid>
       <description>While attempting to follow an Agda tutorial in Scala (CS410 2017 Lecture 2 (more Programs and Proofs, introducing &amp;ldquo;with&amp;rdquo;) - Conor McBride), some understanding of combinators S and K finally began to dawn.
 “It is perhaps astonishing that S and K can be composed to produce combinators that are extensionally equal to any lambda term, and therefore, by Church&amp;rsquo;s thesis, to any computable function whatsoever” ~ Combinatory Logic, Wikipedia 27/10/17</description>
     </item>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Indigo Game Engine Design on FP Pixels</title>
+    <link>https://davesmith00000.github.io/fppixels/categories/indigo-game-engine-design/</link>
+    <description>Recent content in Indigo Game Engine Design on FP Pixels</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-gb</language>
+    <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
+    <lastBuildDate>Tue, 01 Jan 2019 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://davesmith00000.github.io/fppixels/categories/indigo-game-engine-design/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Devlog: Sub-Systems</title>
+      <link>https://davesmith00000.github.io/fppixels/posts/00008-devlog-subsystems/</link>
+      <pubDate>Tue, 01 Jan 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://davesmith00000.github.io/fppixels/posts/00008-devlog-subsystems/</guid>
+      <description>In my first devlog I mentioned the idea of adding sub-systems to Indigo so that I could nicely organise a job system for the game I&amp;rsquo;m working on.
+The sub-systems came together quickly and easily, but the job system is still a work in progress. Since I haven&amp;rsquo;t written for a while though, I thought I&amp;rsquo;d explain what sub-systems are and how they work.
+Quick Example The example above uses two sub-systems:</description>
+    </item>
+    
+    <item>
+      <title>Building Games Without Effects</title>
+      <link>https://davesmith00000.github.io/fppixels/posts/00006-games-without-effects/</link>
+      <pubDate>Sun, 23 Dec 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://davesmith00000.github.io/fppixels/posts/00006-games-without-effects/</guid>
+      <description>TL;DR: Indigo does not [generally] have any Monads or Functors exposed on it&amp;rsquo;s APIs. This is intentional since you&amp;rsquo;re not allowed to error and everything is synchronous.
+Monads that power the internet As I suspect is the case with the majority of Scala developers, my day job is largely about server side programming, building microservices and the like.
+In the context of server-side programming you simply cannot move for Monads.</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Game Devlog on FP Pixels</title>
+    <link>https://davesmith00000.github.io/fppixels/categories/game-devlog/</link>
+    <description>Recent content in Game Devlog on FP Pixels</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-gb</language>
+    <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
+    <lastBuildDate>Tue, 01 Jan 2019 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://davesmith00000.github.io/fppixels/categories/game-devlog/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Devlog: Sub-Systems</title>
+      <link>https://davesmith00000.github.io/fppixels/posts/00008-devlog-subsystems/</link>
+      <pubDate>Tue, 01 Jan 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://davesmith00000.github.io/fppixels/posts/00008-devlog-subsystems/</guid>
+      <description>In my first devlog I mentioned the idea of adding sub-systems to Indigo so that I could nicely organise a job system for the game I&amp;rsquo;m working on.
+The sub-systems came together quickly and easily, but the job system is still a work in progress. Since I haven&amp;rsquo;t written for a while though, I thought I&amp;rsquo;d explain what sub-systems are and how they work.
+Quick Example The example above uses two sub-systems:</description>
+    </item>
+    
+    <item>
+      <title>Devlog: Not quite starting from zero.</title>
+      <link>https://davesmith00000.github.io/fppixels/posts/00004-devlog-starting-out/</link>
+      <pubDate>Fri, 30 Nov 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://davesmith00000.github.io/fppixels/posts/00004-devlog-starting-out/</guid>
+      <description>I’ve had an idea for a game - as yet untitled - rattling around in my head for quite a while now, but attempts to actually build it have been a bit fruitless so far.
+At first, that was because I couldn’t find a game engine I liked*. Later it was because, out of sheer frustration at the state of game dev tooling, I stopped to write my own game engine (Indigo).</description>
+    </item>
+    
+  </channel>
+</rss>
