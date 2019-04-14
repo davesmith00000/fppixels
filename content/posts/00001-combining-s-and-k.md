@@ -1,8 +1,10 @@
 ---
 author: "Dave Smith"
-date: 2017-10-27
+date: "2017-10-27"
 title: Combining S and K
 draft: false
+tags: ["scala", "combinators"]
+categories: ["reference"]
 ---
 
 While attempting to follow an Agda tutorial in Scala ([CS410 2017 Lecture 2 (more Programs and Proofs, introducing "with") - Conor McBride](https://www.youtube.com/watch?v=qcVZxQTouDk)), some understanding of combinators S and K finally began to dawn.

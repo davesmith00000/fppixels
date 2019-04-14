@@ -1,8 +1,10 @@
 ---
 author: "Dave Smith"
-date: 2018-11-30
-title: "Devlog 1: Not quite starting from zero."
+date: 2018-11-30T00:00:00Z
+title: "Devlog: Not quite starting from zero."
 draft: false
+tags: ["scala", "devlog"]
+categories: ["Game Development", "Game Devlog"]
 ---
 
 ![img](/fppixels/images/fallAndStop2.gif)

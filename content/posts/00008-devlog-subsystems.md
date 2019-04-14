@@ -1,8 +1,10 @@
 ---
 author: "Dave Smith"
-date: 2019-01-01
-title: "Devlog 2: Sub-Systems"
+date: "2019-01-01"
+title: "Devlog: Sub-Systems"
 draft: false
+tags: ["scala", "devlog", "indigo"]
+categories: ["Indigo Game Engine Design", "Game Devlog"]
 ---
 
 In my first devlog I mentioned the idea of adding sub-systems to Indigo so that I could nicely organise a job system for the game I'm working on.
@@ -113,7 +115,7 @@ Likewise, rendering is taken care of because each sub-system is rendered separat
 
 ```scala
 def present(gameTime: GameTime, model: Unit, viewModel: Unit, frameInputEvents: FrameInputEvents): SceneUpdateFragment =
-    noRender 
+    noRender
 ```
 
 Nice and easy.

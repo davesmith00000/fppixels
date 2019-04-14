@@ -1,8 +1,10 @@
 ---
 author: "Dave Smith"
-date: 2019-01-05
-title: "Devlog 3: Job Systems"
+date: "2019-01-05"
+title: "Devlog: Job Systems"
 draft: true
+tags: ["scala", "devlog"]
+categories: ["Game Development", "Game Devlog"]
 ---
 
 ![img](/fppixels/images/wandering-about.gif)

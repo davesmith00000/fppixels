@@ -1,8 +1,10 @@
 ---
 author: "Dave Smith"
-date: 2018-12-16
+date: "2018-12-16"
 title: Big Beautiful Packages
 draft: false
+tags: ["scala"]
+categories: ["Tutorial"]
 ---
 
 ## TL;DR:

@@ -1,8 +1,10 @@
 ---
 author: "Dave Smith"
-date: 2018-11-18
+date: "2018-11-18"
 title: Snake in Scala.js
 draft: false
+tags: ["scala", "scala.js", "indigo"]
+categories: ["Game Development"]
 ---
 
 ![img](/fppixels/images/snake.png)

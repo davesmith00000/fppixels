@@ -1,8 +1,10 @@
 ---
 author: "Dave Smith"
-date: 2018-11-20
+date: "2018-11-20"
 title: A Thundering Herd of Naked Dudes!
 draft: false
+tags: ["scala", "performance", "indigo"]
+categories: ["Game Development"]
 ---
 
 ![img](/fppixels/images/thundering_herd.png)

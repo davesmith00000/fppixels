@@ -1,8 +1,10 @@
 ---
 author: "Dave Smith"
-date: 2018-12-27
+date: "2018-12-27"
 title: Contravariant Functor Spotting
 draft: false
+tags: ["scala"]
+categories: ["Tutorial"]
 ---
 
 There are lots of explanations out there on the interwebs about contravariant functors, and perhaps I’m just a bit dim in some regards, but it took me quite a while to get a handle on them.

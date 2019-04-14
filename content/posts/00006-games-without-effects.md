@@ -1,8 +1,10 @@
 ---
 author: "Dave Smith"
-date: 2018-12-23
+date: "2018-12-23"
 title: Building Games Without Effects
 draft: false
+tags: ["scala", "indigo"]
+categories: ["Indigo Game Engine Design"]
 ---
 
 ## TL;DR:
